@@ -1308,7 +1308,8 @@ function handleClientReady(client, message)
     }
   ],function(err)
   {
-    ERR(err);
+    //TODO nobody catches this
+    if(err) console.error(err);
   });
 }
 
