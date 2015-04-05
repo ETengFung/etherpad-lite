@@ -213,7 +213,8 @@ exports.doExport = function(req, res, padId, type)
           }
         ], function(err)
         {
-          if(err && err != "stop") ERR(err);
+          //TODO nobody catches this
+          if(err && err != "stop") console.error(err);
         })
       }
     }
