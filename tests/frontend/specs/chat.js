@@ -8,13 +8,13 @@ describe("Chat messages and UI", function(){
   it("opens chat, sends a message and makes sure it exists on the page", function(done) {
     var inner$ = helper.padInner$; 
     var chrome$ = helper.padChrome$; 
-    var chatValue = "JohnMcLear";
+    var chatValue = "\uD83C\uDCDF\uD82F\uDCA0\uD83C\uDF15";
 
     //click on the chat button to make chat visible
     var $chatButton = chrome$("#chaticon");
     $chatButton.click();
     var $chatInput = chrome$("#chatinput");
-    $chatInput.sendkeys('JohnMcLear'); // simulate a keypress of typing JohnMcLear
+    $chatInput.sendkeys(chatValue); // simulate a keypress of typing JohnMcLear
     $chatInput.sendkeys('{enter}'); // simulate a keypress of enter actually does evt.which = 10 not 13
 
     //check if chat shows up
@@ -22,7 +22,7 @@ describe("Chat messages and UI", function(){
       return chrome$("#chattext").children("p").length !== 0; // wait until the chat message shows up
     }).done(function(){
       var $firstChatMessage = chrome$("#chattext").children("p");
-      var containsMessage = $firstChatMessage.text().indexOf("JohnMcLear") !== -1; // does the string contain JohnMcLear?
+      var containsMessage = $firstChatMessage.text().indexOf("\uD83C\uDCDF\uD82F\uDCA0\uD83C\uDF15") !== -1; // does the string contain JohnMcLear?
       expect(containsMessage).to.be(true); // expect the first chat message to contain JohnMcLear
 
       // do a slightly more thorough check
@@ -31,7 +31,7 @@ describe("Chat messages and UI", function(){
       var time = $firstChatMessage.children(".time");
       var timeValue = time.text();
       var discoveredValue = $firstChatMessage.text();
-      var chatMsgExists = (discoveredValue.indexOf("JohnMcLear") !== -1);
+      var chatMsgExists = (discoveredValue.indexOf("\uD83C\uDCDF\uD82F\uDCA0\uD83C\uDF15") !== -1);
       expect(chatMsgExists).to.be(true);
       done();
     });

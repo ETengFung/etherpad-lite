@@ -1,5 +1,5 @@
 describe("All the alphabet works n stuff", function(){
-  var expectedString = "abcdefghijklmnopqrstuvwxyz";
+  var expectedString = "abcdefghijklmn\uD83C\uDCDF\uD82F\uDCA0\uD83C\uDF15opqrstuvwxyz";
 
   //create a new pad before each test run
   beforeEach(function(cb){
