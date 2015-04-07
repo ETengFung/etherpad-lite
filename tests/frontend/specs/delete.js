@@ -56,4 +56,24 @@ describe("delete keystroke", function(){
 
     done();
   });
+
+  it("deletes both surrogates with backspace ", function(done) {
+    var inner$ = helper.padInner$; 
+    var chrome$ = helper.padChrome$; 
+    
+    var firstTextElement = inner$("div").first();
+    
+    firstTextElement.sendkeys('{selectall}');
+    firstTextElement.sendkeys('{del}');
+    var string = "\uD82F\uDCA0"
+    firstTextElement.sendkeys(string);
+    
+    $firstTextElement.sendkeys('{backspace}');
+
+    var newLength = inner$("div").first().text().length;
+    
+    expect(newLength).to.be(0);
+
+    done();
+  });
 });
