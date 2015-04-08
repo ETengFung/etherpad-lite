@@ -62,7 +62,7 @@ describe('createAuthor', function(){
 
 describe('appendChatMessage', function(){
   it('Adds a chat message to the pad', function(done) {
-    api.get(endPoint('appendChatMessage')+"&padID="+padID+"&text=blalblalbha&authorID="+authorID+"&time="+timestamp)
+    api.get(endPoint('appendChatMessage')+"&padID="+padID+"&text=blalblalbha\uD83C\uDCDF\uD82F\uDCA0\uD83C\uDF15&authorID="+authorID+"&time="+timestamp)
     .expect(function(res){
       if(res.body.code !== 0) throw new Error("Unable to create chat message");
     })
