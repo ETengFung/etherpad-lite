@@ -96,7 +96,7 @@ describe('deleteGroup', function(){
 
 describe('createGroupIfNotExistsFor', function(){
   it('Creates a group if one doesnt exist for mapper 0', function(done) {
-    api.get(endPoint('createGroupIfNotExistsFor')+"&groupMapper=management")
+    api.get(endPoint('createGroupIfNotExistsFor')+"&groupMapper=management\uD83C\uDCDF")
     .expect(function(res){
       if(res.body.code !== 0 || !res.body.data.groupID) throw new Error("Sessions show as existing for this group");
     })
@@ -130,7 +130,7 @@ describe('createAuthor', function(){
 
 describe('createAuthor', function(){
   it('Creates an author with a name set', function(done) {
-    api.get(endPoint('createAuthor')+"&name=john")
+    api.get(endPoint('createAuthor')+"&name=\uD83C\uDCDF\uD82F\uDCA0\uD83C\uDF15")
     .expect(function(res){
       if(res.body.code !== 0 || !res.body.data.authorID) throw new Error("Unable to create user with name set");
       authorID = res.body.data.authorID; // we will be this author for the rest of the tests
@@ -155,7 +155,7 @@ describe('getAuthorName', function(){
   it('Gets the author name', function(done) {
     api.get(endPoint('getAuthorName')+"&authorID="+authorID)
     .expect(function(res){
-      if(res.body.code !== 0 || !res.body.data === "john") throw new Error("Unable to get Author Name from Author ID");
+      if(res.body.code !== 0 || !res.body.data === "\uD83C\uDCDF\uD82F\uDCA0\uD83C\uDF15") throw new Error("Unable to get Author Name from Author ID");
     })
     .expect('Content-Type', /json/)
     .expect(200, done)
