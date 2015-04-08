@@ -519,10 +519,10 @@ function generateLongText(){
   var text = "";
   var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-  for( var i=0; i < 80000; i++ ){
+  for( var i=0; i < 79997; i++ ){
     text += possible.charAt(Math.floor(Math.random() * possible.length));
   }
-  return text;
+  return text + "\uD83C\uDCDF\uD82F\uDCA0\uD83C\uDF15";
 }
 
 // Need this to compare arrays (listSavedRevisions test)
