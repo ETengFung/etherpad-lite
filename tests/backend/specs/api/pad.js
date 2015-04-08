@@ -12,7 +12,7 @@ var apiVersion = 1;
 var testPadId = makeid();
 var lastEdited = "";
 var text = generateLongText();
-var ULhtml = '<!DOCTYPE html><html><body><ul class="bullet"><li>one</li><li>2</li></ul><br><ul><ul class="bullet"><li>UL2</li></ul></ul></body></html>';
+var ULhtml = '<!DOCTYPE html><html><body><ul class="bullet"><li>one</li><li>2\uD83C\uDCDF\uD82F\uDCA0\uD83C\uDF15</li></ul><br><ul><ul class="bullet"><li>UL2</li></ul></ul></body></html>';
 
 describe('Connectivity', function(){
   it('errors if can not connect', function(done) {
@@ -173,7 +173,7 @@ describe('getHTML', function(){
 
 describe('createPad', function(){
   it('creates a new Pad with text', function(done) {
-    api.get(endPoint('createPad')+"&padID="+testPadId+"&text=testText")
+    api.get(endPoint('createPad')+"&padID="+testPadId+"&text=test\uD83C\uDCDF\uD82F\uDCA0\uD83C\uDF15Text")
     .expect(function(res){
       if(res.body.code !== 0) throw new Error("Pad Creation failed")
     })
@@ -186,7 +186,7 @@ describe('getText', function(){
   it('gets the Pad text and expect it to be testText with \n which is a line break', function(done) {
     api.get(endPoint('getText')+"&padID="+testPadId)
     .expect(function(res){
-      if(res.body.data.text !== "testText\n") throw new Error("Pad Creation with text")
+      if(res.body.data.text !== "test\uD83C\uDCDF\uD82F\uDCA0\uD83C\uDF15Text\n") throw new Error("Pad Creation with text")
     }) 
     .expect('Content-Type', /json/)
     .expect(200, done)
@@ -195,7 +195,7 @@ describe('getText', function(){
 
 describe('setText', function(){
   it('creates a new Pad with text', function(done) {
-    api.get(endPoint('setText')+"&padID="+testPadId+"&text=testTextTwo")
+    api.get(endPoint('setText')+"&padID="+testPadId+"&text=test\uD83C\uDCDF\uD82F\uDCA0\uD83C\uDF15TextTwo")
     .expect(function(res){
       if(res.body.code !== 0) throw new Error("Pad setting text failed");
     })
@@ -208,7 +208,7 @@ describe('getText', function(){
   it('gets the Pad text', function(done) {
     api.get(endPoint('getText')+"&padID="+testPadId)
     .expect(function(res){
-      if(res.body.data.text !== "testTextTwo\n") throw new Error("Setting Text")
+      if(res.body.data.text !== "test\uD83C\uDCDF\uD82F\uDCA0\uD83C\uDF15TextTwo\n") throw new Error("Setting Text")
     })
     .expect('Content-Type', /json/)
     .expect(200, done)
@@ -310,7 +310,7 @@ describe('getLastEdited', function(){
 
 describe('setText', function(){
   it('creates a new Pad with text', function(done) {
-    api.get(endPoint('setText')+"&padID="+testPadId+"&text=testTextTwo")
+    api.get(endPoint('setText')+"&padID="+testPadId+"&text=test\uD83C\uDCDF\uD82F\uDCA0\uD83C\uDF15TextTwo")
     .expect(function(res){
       if(res.body.code !== 0) throw new Error("Pad setting text failed");
     })
@@ -459,7 +459,7 @@ describe('getLastEdited', function(){
 
 describe('setHTML', function(){
   it('Sets the HTML of a Pad attempting to pass ugly HTML', function(done) {
-    var html = "<div><b>Hello HTML</title></head></div>";
+    var html = "<div><b>Hello HTML\uD83C\uDCDF\uD82F\uDCA0\uD83C\uDF15</title></head></div>";
     api.get(endPoint('setHTML')+"&padID="+testPadId+"&html="+html)
     .expect(function(res){
 console.log(res.body.code);
