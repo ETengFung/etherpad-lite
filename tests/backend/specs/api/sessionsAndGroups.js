@@ -96,7 +96,7 @@ describe('deleteGroup', function(){
 
 describe('createGroupIfNotExistsFor', function(){
   it('Creates a group if one doesnt exist for mapper 0', function(done) {
-    api.get(endPoint('createGroupIfNotExistsFor')+"&groupMapper=management")
+    api.get(endPoint('createGroupIfNotExistsFor')+"&groupMapper=management\uD83C\uDCDF")
     .expect(function(res){
       if(res.body.code !== 0 || !res.body.data.groupID) throw new Error("Sessions show as existing for this group");
     })
