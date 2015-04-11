@@ -23,7 +23,6 @@ exports.expressCreateServer = function (hook_name, args, cb) {
 
   });
 
-
   // path.join seems to normalize by default, but we'll just be explicit
   var rootTestFolder = path.normalize(path.join(npm.root, "../tests/frontend/"));
 
