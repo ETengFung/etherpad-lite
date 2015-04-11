@@ -49,7 +49,7 @@ describe("import indents functionality", function(){
     return exportresults
   }
 
-  it("import a pad with indents from html", function(done){
+  xit("import a pad with indents from html", function(done){
     var importurl = helper.padChrome$.window.location.href+'/import'
     var htmlWithIndents = '<html><body><ul class="list-indent1"><li>indent line 1</li><li>indent line 2</li><ul class="list-indent2"><li>indent2 line 1</li><li>indent2 line 2</li></ul></ul></body></html>'
     importrequest(htmlWithIndents,importurl,"html")
@@ -67,7 +67,7 @@ describe("import indents functionality", function(){
     done()
   })
   
-  it("import a pad with indented lists and newlines from html", function(done){
+  xit("import a pad with indented lists and newlines from html", function(done){
     var importurl = helper.padChrome$.window.location.href+'/import'
     var htmlWithIndents = '<html><body><ul class="list-indent1"><li>indent line 1</li></ul><br/><ul class="list-indent1"><li>indent 1 line 2</li><ul class="list-indent2"><li>indent 2 times line 1</li></ul></ul><br/><ul class="list-indent1"><ul class="list-indent2"><li>indent 2 times line 2</li></ul></ul></body></html>'
     importrequest(htmlWithIndents,importurl,"html")
