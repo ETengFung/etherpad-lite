@@ -53,7 +53,7 @@ describe("import functionality", function(){
     return exportresults
   }
 
-  it("import a pad with newlines from txt", function(done){
+  xit("import a pad with newlines from txt", function(done){
     var importurl = helper.padChrome$.window.location.href+'/import'
     var textWithNewLines = 'importedｙ text\nnewline'
     importrequest(textWithNewLines,importurl,"txt")
@@ -65,7 +65,7 @@ describe("import functionality", function(){
     expect(results[1][1]).to.be("importedｙ text\nnewline\n\n")
     done()
   })
-  it("import a pad with newlines from html", function(done){
+  xit("import a pad with newlines from html", function(done){
     var importurl = helper.padChrome$.window.location.href+'/import'
     var htmlWithNewLines = '<html><body>htmltextｙ<br/>newline</body></html>'
     importrequest(htmlWithNewLines,importurl,"html")
@@ -77,7 +77,7 @@ describe("import functionality", function(){
     expect(results[1][1]).to.be("htmltextｙ\nnewline\n\n")
     done()
   })
-  it("import a pad with attributes from html", function(done){
+  xit("import a pad with attributes from html", function(done){
     var importurl = helper.padChrome$.window.location.href+'/import'
     var htmlWithNewLines = '<html><body>htmltext<br/><span class="b s i u"><b><i><s><u>newlineｙ</u></s></i></b></body></html>'
     importrequest(htmlWithNewLines,importurl,"html")
@@ -89,7 +89,7 @@ describe("import functionality", function(){
     expect(results[1][1]).to.be('htmltext\nnewlineｙ\n\n')
     done()
   })
-  it("import a pad with bullets from html", function(done){
+  xit("import a pad with bullets from html", function(done){
     var importurl = helper.padChrome$.window.location.href+'/import'
     var htmlWithBullets = '<html><body><ul class="list-bullet1"><li>bullet line 1ｙ</li><li>bullet line 2</li><ul class="list-bullet2"><li>bullet2 line 1</li><li>bullet2 line 2</li></ul></ul></body></html>'
     importrequest(htmlWithBullets,importurl,"html")
@@ -106,7 +106,7 @@ describe("import functionality", function(){
     expect(results[1][1]).to.be('\t* bullet line 1ｙ\n\t* bullet line 2\n\t\t* bullet2 line 1\n\t\t* bullet2 line 2\n\n')
     done()
   })
-  it("import a pad with bullets and newlines from html", function(done){
+  xit("import a pad with bullets and newlines from html", function(done){
     var importurl = helper.padChrome$.window.location.href+'/import'
     var htmlWithBullets = '<html><body><ul class="list-bullet1"><li>bullet line 1ｙ</li></ul><br/><ul class="list-bullet1"><li>bullet line 2</li><ul class="list-bullet2"><li>bullet2 line 1</li></ul></ul><br/><ul class="list-bullet1"><ul class="list-bullet2"><li>bullet2 line 2</li></ul></ul></body></html>'
     importrequest(htmlWithBullets,importurl,"html")
@@ -125,7 +125,7 @@ describe("import functionality", function(){
     expect(results[1][1]).to.be('\t* bullet line 1ｙ\n\n\t* bullet line 2\n\t\t* bullet2 line 1\n\n\t\t* bullet2 line 2\n\n')
     done()
   })
-  it("import a pad with bullets and newlines and attributes from html", function(done){
+  xit("import a pad with bullets and newlines and attributes from html", function(done){
     var importurl = helper.padChrome$.window.location.href+'/import'
     var htmlWithBullets = '<html><body><ul class="list-bullet1"><li>bullet line 1</li></ul><br/><ul class="list-bullet1"><li>bullet line 2</li><ul class="list-bullet2"><li>bullet2 line 1</li></ul></ul><br/><ul class="list-bullet1"><ul class="list-bullet2"><ul class="list-bullet3"><ul class="list-bullet4"><li><span class="b s i u"><b><i><s><u>ｙbullet4 line 2 bisu</u></s></i></b></span></li><li><span class="b s "><b><s>bullet4 line 2 bs</s></b></span></li><li><span class="u"><u>bullet4 line 2 u</u></span><span class="u i s"><i><s><u>uis</u></s></i></span></li></ul></ul></ul></ul></body></html>'
     importrequest(htmlWithBullets,importurl,"html")
@@ -144,7 +144,7 @@ describe("import functionality", function(){
     expect(results[1][1]).to.be('\t* bullet line 1\n\n\t* bullet line 2\n\t\t* bullet2 line 1\n\n\t\t\t\t* ｙbullet4 line 2 bisu\n\t\t\t\t* bullet4 line 2 bs\n\t\t\t\t* bullet4 line 2 uuis\n\n')
     done()
   })
-  it("import a pad with nested bullets from html", function(done){
+  xit("import a pad with nested bullets from html", function(done){
     var importurl = helper.padChrome$.window.location.href+'/import'
     var htmlWithBullets = '<html><body>\
 <ul class="list-bullet1"><li>bullet line 1</li></ul>\
@@ -177,7 +177,7 @@ describe("import functionality", function(){
     expect(results[1][1]).to.be('\t* bullet line 1\n\t* bullet line 2\n\t\t* bullet2 line 1\n\t\t\t\t* ｙbullet4 line 2\n\t\t\t\t* bullet4 line 2\n\t\t\t\t* bullet4 line 2\n\t\t\t* bullet3 line 1\n\t* bullet1 line 1\n\n')
     done()
   })
-  it("import a pad with 8 levels of bullets and newlines and attributes from html", function(done){
+  xit("import a pad with 8 levels of bullets and newlines and attributes from html", function(done){
     var importurl = helper.padChrome$.window.location.href+'/import'
     var htmlWithBullets = '<html><body><ul class="list-bullet1"><li>bullet line 1</li></ul><br/><ul class="list-bullet1"><li>bullet line 2</li><ul class="list-bullet2"><li>bullet2 line 1</li></ul></ul><br/><ul class="list-bullet1"><ul class="list-bullet2"><ul class="list-bullet3"><ul class="list-bullet4"><li><span class="b s i u"><b><i><s><u>ｙbullet4 line 2 bisu</u></s></i></b></span></li><li><span class="b s "><b><s>bullet4 line 2 bs</s></b></span></li><li><span class="u"><u>bullet4 line 2 u</u></span><span class="u i s"><i><s><u>uis</u></s></i></span></li><ul class="list-bullet5"><ul class="list-bullet6"><ul class="list-bullet7"><ul class="list-bullet8"><li><span class="">foo</span></li><li><span class="b s"><b><s>foobar bs</b></s></span></li></ul></ul></ul></ul><ul class="list-bullet5"><li>foobar</li></ul></ul></ul></ul></body></html>'
     importrequest(htmlWithBullets,importurl,"html")
