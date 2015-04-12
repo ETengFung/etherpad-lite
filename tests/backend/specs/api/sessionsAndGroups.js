@@ -96,7 +96,7 @@ describe('deleteGroup', function(){
 
 describe('createGroupIfNotExistsFor', function(){
   it('Creates a group if one doesnt exist for mapper 0', function(done) {
-    api.get(endPoint('createGroupIfNotExistsFor')+"&groupMapper=management\uD83C\uDCDF")
+    api.get(endPoint('createGroupIfNotExistsFor')+"&groupMapper=management")
     .expect(function(res){
       if(res.body.code !== 0 || !res.body.data.groupID) throw new Error("Sessions show as existing for this group");
     })
@@ -177,6 +177,14 @@ describe('createAuthorIfNotExistsFor', function(){
 
 describe('getAuthorName', function(){
   it('Gets the author name', function(done) {
+    api.get(endPoint('getAuthorName')+"&authorID="+authorID)
+    .expect(function(res){
+      if(res.body.code !== 0 || !res.body.data === "ｙ") throw new Error("Unable to get Author Name within BMP");
+    })
+    .expect('Content-Type', /json/)
+    .expect(200, done)
+  });
+  it('Gets the BMP author name', function(done) {
     api.get(endPoint('getAuthorName')+"&authorID="+authorID)
     .expect(function(res){
       if(res.body.code !== 0 || !res.body.data === "ｙ") throw new Error("Unable to get Author Name within BMP");
@@ -405,7 +413,7 @@ function makeid()
   var text = "";
   var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-  for( var i=0; i < 3; i++ ){
+  for( var i=0; i < 4; i++ ){
     text += possible.charAt(Math.floor(Math.random() * possible.length));
   }
   return text+"ｙ";
