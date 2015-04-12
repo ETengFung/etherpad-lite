@@ -35,7 +35,7 @@ describe("delete keystroke", function(){
     done();
   });
 
-  it("deletes both surrogates with backspace ", function(done) {
+  it("deletes a high code from BMP with backspace ", function(done) {
     var inner$ = helper.padInner$; 
     var chrome$ = helper.padChrome$; 
     
@@ -43,26 +43,7 @@ describe("delete keystroke", function(){
     
     firstTextElement.sendkeys('{selectall}');
     firstTextElement.sendkeys('{del}');
-    var string = "\uD82F\uDCA0\uD82F\uDCA0"
-    firstTextElement.sendkeys(string);
- 
-    firstTextElement.sendkeys('{backspace}');
-
-    var newLength = inner$("div").first().text().length;
-    
-    expect(newLength).to.be(2);
-
-    done();
-  });
-  it("deletes one utf-16 encoded code point", function(done) {
-    var inner$ = helper.padInner$; 
-    var chrome$ = helper.padChrome$; 
-    
-    var firstTextElement = inner$("div").first();
-    
-    firstTextElement.sendkeys('{selectall}');
-    firstTextElement.sendkeys('{del}');
-    var string = "ab\u0300"
+    var string = "ｙ"
     firstTextElement.sendkeys(string);
  
     firstTextElement.sendkeys('{backspace}');

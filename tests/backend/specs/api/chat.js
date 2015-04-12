@@ -62,7 +62,15 @@ describe('createAuthor', function(){
 
 describe('appendChatMessage', function(){
   it('Adds a chat message to the pad', function(done) {
-    api.get(endPoint('appendChatMessage')+"&padID="+padID+"&text=blalblalbha\uD83C\uDCDF\uD82F\uDCA0\uD83C\uDF15&authorID="+authorID+"&time="+timestamp)
+    api.get(endPoint('appendChatMessage')+"&padID="+padID+"&text=ｙ&authorID="+authorID+"&time="+timestamp)
+    .expect(function(res){
+      if(res.body.code !== 0) throw new Error("Unable to create chat message");
+    })
+    .expect('Content-Type', /json/)
+    .expect(200, done)
+  });
+  it('Cannot add chat message outside BMP to the pad', function(done) {
+    api.get(endPoint('appendChatMessage')+"&padID="+padID+"&text=\uD835\uDC00&authorID="+authorID+"&time="+timestamp)
     .expect(function(res){
       if(res.body.code !== 0) throw new Error("Unable to create chat message");
     })
@@ -106,8 +114,8 @@ function makeid()
   var text = "";
   var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-  for( var i=0; i < 3; i++ ){
+  for( var i=0; i < 4; i++ ){
     text += possible.charAt(Math.floor(Math.random() * possible.length));
   }
-  return text+"\uD83C\uDF15";
+  return text+"ｙ";
 }

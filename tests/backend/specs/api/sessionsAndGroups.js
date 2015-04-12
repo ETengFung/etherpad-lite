@@ -96,7 +96,7 @@ describe('deleteGroup', function(){
 
 describe('createGroupIfNotExistsFor', function(){
   it('Creates a group if one doesnt exist for mapper 0', function(done) {
-    api.get(endPoint('createGroupIfNotExistsFor')+"&groupMapper=management\uD83C\uDCDF")
+    api.get(endPoint('createGroupIfNotExistsFor')+"&groupMapper=management")
     .expect(function(res){
       if(res.body.code !== 0 || !res.body.data.groupID) throw new Error("Sessions show as existing for this group");
     })
@@ -129,11 +129,18 @@ describe('createAuthor', function(){
 })
 
 describe('createAuthor', function(){
-  it('Creates an author with a name set', function(done) {
-    api.get(endPoint('createAuthor')+"&name=\uD83C\uDCDF\uD82F\uDCA0\uD83C\uDF15")
+  it('Cannot create author outside BMP', function(done) {
+    api.get(endPoint('createAuthor')+"&name=\uD835\uDC00")
     .expect(function(res){
-      if(res.body.code !== 0 || !res.body.data.authorID) throw new Error("Unable to create user with name set");
-      authorID = res.body.data.authorID; // we will be this author for the rest of the tests
+      if(res.body.code === 0 || res.body.data.authorID) throw new Error("Created author outside BMP");
+    })
+    .expect('Content-Type', /json/)
+    .expect(200, done)
+  });
+  it('Can create author in BMP', function(done) {
+    api.get(endPoint('createAuthor')+"&name=ｙ")
+    .expect(function(res){
+      if(res.body.code !== 0 || !res.body.data.authorID) throw new Error("Unable to create author within BMP");
     })
     .expect('Content-Type', /json/)
     .expect(200, done)
@@ -155,7 +162,15 @@ describe('getAuthorName', function(){
   it('Gets the author name', function(done) {
     api.get(endPoint('getAuthorName')+"&authorID="+authorID)
     .expect(function(res){
-      if(res.body.code !== 0 || !res.body.data === "\uD83C\uDCDF\uD82F\uDCA0\uD83C\uDF15") throw new Error("Unable to get Author Name from Author ID");
+      if(res.body.code !== 0 || !res.body.data === "ｙ") throw new Error("Unable to get Author Name within BMP");
+    })
+    .expect('Content-Type', /json/)
+    .expect(200, done)
+  });
+  it('Gets the BMP author name', function(done) {
+    api.get(endPoint('getAuthorName')+"&authorID="+authorID)
+    .expect(function(res){
+      if(res.body.code !== 0 || !res.body.data === "ｙ") throw new Error("Unable to get Author Name within BMP");
     })
     .expect('Content-Type', /json/)
     .expect(200, done)
@@ -357,8 +372,8 @@ function makeid()
   var text = "";
   var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-  for( var i=0; i < 3; i++ ){
+  for( var i=0; i < 4; i++ ){
     text += possible.charAt(Math.floor(Math.random() * possible.length));
   }
-  return text+"\uD83C\uDF15";
+  return text+"ｙ";
 }

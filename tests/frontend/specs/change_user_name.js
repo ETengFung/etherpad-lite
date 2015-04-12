@@ -16,7 +16,7 @@ describe("change username value", function(){
     var $usernameInput = chrome$("#myusernameedit");
     $usernameInput.click();
 
-    $usernameInput.val('\uD83C\uDCDF\uD82F\uDCA0\uD83C\uDF15');
+    $usernameInput.val('ｙ');
     $usernameInput.blur();
 
     setTimeout(function(){ //give it a second to save the username on the server side
@@ -30,7 +30,7 @@ describe("change username value", function(){
           $userButton.click();
 
           var $usernameInput = chrome$("#myusernameedit");
-          expect($usernameInput.val()).to.be('\uD83C\uDCDF\uD82F\uDCA0\uD83C\uDF15')
+          expect($usernameInput.val()).to.be('ｙ')
           done();
         }
       });
@@ -49,7 +49,7 @@ describe("change username value", function(){
     var $usernameInput = chrome$("#myusernameedit");
     $usernameInput.click();
 
-    $usernameInput.val('\uD83C\uDCDF\uD82F\uDCA0\uD83C\uDF15');
+    $usernameInput.val('ｙ');
     $usernameInput.blur();
 
     //click on the chat button to make chat visible
@@ -64,7 +64,7 @@ describe("change username value", function(){
       return chrome$("#chattext").children("p").length !== 0; // wait until the chat message shows up
     }).done(function(){
       var $firstChatMessage = chrome$("#chattext").children("p");
-      var containsJohnMcLear = $firstChatMessage.text().indexOf("\uD83C\uDCDF\uD82F\uDCA0\uD83C\uDF15") !== -1; // does the string contain John McLear
+      var containsJohnMcLear = $firstChatMessage.text().indexOf("ｙ") !== -1; // does the string contain John McLear
       expect(containsJohnMcLear).to.be(true); // expect the first chat message to contain JohnMcLear
       done();
     });
