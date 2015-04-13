@@ -362,6 +362,8 @@ function handleChatMessage(client, message)
   var time = new Date().getTime();
   var userId = sessioninfos[client.id].author;
   var text = message.data.text;
+  // Replace Unicode above \uFFFF with \uFFFD
+  text = text.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/,"\uFFFD\uFFFD")
   var padId = sessioninfos[client.id].padId;
 
   var pad;
