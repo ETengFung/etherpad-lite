@@ -144,7 +144,7 @@ describe("import functionality", function(){
     expect(results[1][1]).to.be('\t* bullet line 1\n\n\t* bullet line 2\n\t\t* bullet2 line 1\n\n\t\t\t\t* ｙbullet4 line 2 bisu\n\t\t\t\t* bullet4 line 2 bs\n\t\t\t\t* bullet4 line 2 uuis\n\n')
     done()
   })
-  xit("import a pad with nested bullets from html", function(done){
+  it("import a pad with nested bullets from html", function(done){
     var importurl = helper.padChrome$.window.location.href+'/import'
     var htmlWithBullets = '<html><body>\
 <ul class="list-bullet1"><li>bullet line 1</li></ul>\
