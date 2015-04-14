@@ -77,7 +77,7 @@ describe('appendChatMessage', function(){
     .expect('Content-Type', /json/)
     .expect(200, done)
   });
-  it('Cannot add chat message outside BMP to the pad', function(done) {
+  it('Chat message outside BMP is added and replaced', function(done) {
     api.get(endPoint('appendChatMessage')+"&padID="+padID+"&text=\uD835\uDC00&authorID="+authorID+"&time="+timestamp)
     .expect(function(res){
       if(res.body.code !== 0) throw new Error("Could not send chat message with unicode above U+FFFF");
@@ -106,7 +106,16 @@ describe('getChatHistory', function(){
     .expect(function(res){
       if(res.body.data.messages.length !== 3) throw new Error("Chat History Length is wrong");
       if(res.body.code !== 0) throw new Error("Unable to get chat history");
-      if(res.body.data.messages.first.last.text !== "\uFFFD\uFFFD") throw new Error("char in chat message with unicode above U+FFFF was not replaced");
+    })
+    .expect('Content-Type', /json/)
+    .expect(200, done)
+  });
+  it('Gets the last chat message (with replaced character)', function(done) {
+    api.get(endPoint('getChatHistory')+"&padID="+padID+"&start=1&end=2")
+    .expect(function(res){
+      if(res.body.data.messages.length !== 2) throw new Error("Chat History Length is wrong");
+      if(res.body.code !== 0) throw new Error("Unable to get chat history");
+      if(res.body.data.messages[1].text !== "\uFFFD\uFFFD") throw new Error("char in chat message with unicode above U+FFFF was not replaced");
     })
     .expect('Content-Type', /json/)
     .expect(200, done)
