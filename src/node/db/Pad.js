@@ -298,7 +298,7 @@ Pad.prototype.setText = function setText(newText) {
 
 Pad.prototype.appendChatMessage = function appendChatMessage(text, userId, time) {
   // Replace Unicode above \uFFFF with \uFFFD
-  text = text.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/,"\uFFFD\uFFFD");
+  text = text.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,"\uFFFD\uFFFD");
 
   this.chatHead++;
   //save the chat entry in the database
