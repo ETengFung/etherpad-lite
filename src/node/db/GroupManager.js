@@ -212,7 +212,7 @@ exports.createGroupIfNotExistsFor = function(groupMapper, callback)
   // code points above U+FFFF
   if(groupMapper.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]/))
   {
-    callback("group mapper with unrepresentable character");
+    callback(new customError("group mapper with unrepresentable character","apierror"));
     return;
   }
   

@@ -126,7 +126,7 @@ exports.createAuthor = function(name, callback)
   // code points above U+FFFF
   if(name && name.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]/))
   {
-    callback("author with unrepresentable character");
+    callback(new customError("author with unrepresentable character","apierror"));
     return;
   }
   //create the new author name
