@@ -114,9 +114,7 @@ describe('createGroupIfNotExistsFor', function(){
   it('Cannot create group mapper with astral code points', function(done) {
     api.get(endPoint('createGroupIfNotExistsFor')+"&groupMapper=management\uD835\uDC00")
     .expect(function(res){
-      console.error("res.body.code:",res.body.code)
-      console.error("groupid:",res.body.data.groupID)
-      if(res.body.code === 0 || res.body.data.groupID) throw new Error("Group with astral");
+      if(!res.body.code === 500) throw new Error("Group with astral code points was created");
     })
     .expect('Content-Type', /json/)
     .expect(200, done)
