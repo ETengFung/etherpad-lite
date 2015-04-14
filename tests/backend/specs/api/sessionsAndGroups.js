@@ -103,6 +103,22 @@ describe('createGroupIfNotExistsFor', function(){
     .expect('Content-Type', /json/)
     .expect(200, done)
   });
+  it('Creates a group mapper and supports BMP', function(done) {
+    api.get(endPoint('createGroupIfNotExistsFor')+"&groupMapper=managementｙ")
+    .expect(function(res){
+      if(res.body.code !== 0 || !res.body.data.groupID) throw new Error("Sessions show as existing for this group");
+    })
+    .expect('Content-Type', /json/)
+    .expect(200, done)
+  });
+  it('Cannot create group mapper with astral code points', function(done) {
+    api.get(endPoint('createGroupIfNotExistsFor')+"&groupMapper=management\uD835\uDC00")
+    .expect(function(res){
+      if(res.body.code !== 0 || !res.body.data.groupID) throw new Error("Sessions show as existing for this group");
+    })
+    .expect('Content-Type', /json/)
+    .expect(200, done)
+  });
 })
 
 describe('createGroup', function(){
