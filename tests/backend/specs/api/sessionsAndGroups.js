@@ -384,5 +384,5 @@ function makeid()
   for( var i=0; i < 4; i++ ){
     text += possible.charAt(Math.floor(Math.random() * possible.length));
   }
-  return text+"ｙ";
+  return text+"\uD83C\uDCDFｙ\uD83C\uDCDF";
 }
