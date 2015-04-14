@@ -13,7 +13,7 @@ var testPadId = makeid();
 var lastEdited = "";
 var text = generateLongText();
 var ULhtml = '<!DOCTYPE html><html><body><ul class="bullet"><li>one</li><li>2</li></ul><br><ul><ul class="bullet"><li>UL2</li></ul></ul></body></html>';
-var ULhtml_bmp = '<!DOCTYPE html><html><body><ul class="bullet"><li>one</li><li>2ｙ</li></ul><br><ul><ul class="bullet"><li>UL2</li></ul></ul></body></html>';
+var ULhtml_bmp = '<!DOCTYPE html><html><body><ul class="bullet"><li>one</li><li>2\uD83C\uDCDFｙ\uD83C\uDCDF</li></ul><br><ul><ul class="bullet"><li>UL2</li></ul></ul></body></html>';
 
 describe('Connectivity', function(){
   it('errors if can not connect', function(done) {
@@ -488,6 +488,29 @@ describe('getHTML', function(){
     .expect(function(res){
       var ehtml = res.body.data.html.replace("<br></body>", "</body>").toLowerCase();
       var uhtml = ULhtml.toLowerCase();
+      if(ehtml !== uhtml) throw new Error("Imported HTML does not match served HTML")
+    })
+    .expect('Content-Type', /json/)
+    .expect(200, done)
+  });
+})
+describe('setHTML', function(){
+  it('Sets the HTML of a Pad BMP (astral code points get replaced)', function(done) {
+    api.get(endPoint('setHTML')+"&padID="+testPadId+"&html="+ULhtml_bmp)
+    .expect(function(res){
+      if(res.body.code !== 0) throw new Error("List HTML cant be imported")
+    })
+    .expect('Content-Type', /json/)
+    .expect(200, done)
+  });
+})
+
+describe('getHTML', function(){
+  it('Gets the HTML of a Pad BMP (astral code points get replaced) ', function(done) {
+    api.get(endPoint('getHTML')+"&padID="+testPadId)
+    .expect(function(res){
+      var ehtml = res.body.data.html.replace("<br></body>", "</body>").toLowerCase();
+      var uhtml = ULhtml_bmp.toLowerCase().replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,"\uFFFD\uFFFD");
       if(ehtml !== uhtml) throw new Error("Imported HTML does not match served HTML")
     })
     .expect('Content-Type', /json/)
