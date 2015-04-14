@@ -148,8 +148,7 @@ describe('createAuthor', function(){
   it('Cannot create author outside BMP', function(done) {
     api.get(endPoint('createAuthor')+"&name=\uD835\uDC00")
     .expect(function(res){
-      console.error("error code:",res.body.code)
-      if(!res.body.code === 1 || res.body.data.authorID) throw new Error("Created author outside BMP");
+      if(!res.body.code === 500) throw new Error("Created author outside BMP");
     })
     .expect('Content-Type', /json/)
     .expect(200, done)
