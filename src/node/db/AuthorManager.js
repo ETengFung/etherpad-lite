@@ -124,7 +124,7 @@ function mapAuthorWithDBKey (mapperkey, mapper, callback)
 exports.createAuthor = function(name, callback)
 {
   // code points above U+FFFF
-  if(name.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]/))
+  if(name && name.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]/))
   {
     callback(new customError("author with unrepresentable character"));
   }
