@@ -569,9 +569,7 @@ describe('getHTML', function(){
     api.get(endPoint('getHTML')+"&padID="+testPadId)
     .expect(function(res){
       var ehtml = res.body.data.html.replace("<br></body>", "</body>").toLowerCase();
-      //ehtml.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,'&#55356;&#56543;');
-      //ehtml.replace(/ｙ/g,'&#65369;');
-      var uhtml = ULhtml_bmp.replace(/\uD83C\uDCDF/g,"&#55356;&#56543;"); //.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,"\uFFFD\uFFFD");
+      var uhtml = ULhtml_bmp.toLowerCase().replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,"\uFFFD\uFFFD");
       uhtml = uhtml.replace(/ｙ/g,'&#65369;').toLowerCase();
       if(ehtml !== uhtml) throw new Error("Imported HTML does not match served HTML")
     })
