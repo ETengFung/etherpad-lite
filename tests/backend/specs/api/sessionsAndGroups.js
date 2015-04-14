@@ -200,14 +200,6 @@ describe('getAuthorName', function(){
     .expect('Content-Type', /json/)
     .expect(200, done)
   });
-  it('Gets the BMP author name', function(done) {
-    api.get(endPoint('getAuthorName')+"&authorID="+authorID)
-    .expect(function(res){
-      if(res.body.code !== 0 || !res.body.data === "ｙ") throw new Error("Unable to get Author Name within BMP");
-    })
-    .expect('Content-Type', /json/)
-    .expect(200, done)
-  });
 })
 
 // BEGIN SESSION TESTS
