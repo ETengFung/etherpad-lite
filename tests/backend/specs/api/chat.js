@@ -84,7 +84,7 @@ describe('getChatHead', function(){
   it('Gets the head of chat', function(done) {
     api.get(endPoint('getChatHead')+"&padID="+padID)
     .expect(function(res){
-      if(res.body.data.chatHead !== 2) throw new Error("Chat Head Length is wrong");
+      if(res.body.data.chatHead !== 1) throw new Error("Chat Head Length is wrong");
       if(res.body.code !== 0) throw new Error("Unable to get chat head");
     })
     .expect('Content-Type', /json/)
@@ -103,9 +103,9 @@ describe('getChatHistory', function(){
     .expect(200, done)
   });
   it('Gets the last chat message (with replaced character)', function(done) {
-    api.get(endPoint('getChatHistory')+"&padID="+padID+"&start=1&end=2")
+    api.get(endPoint('getChatHistory')+"&padID="+padID+"&start=0&end=1")
     .expect(function(res){
-      if(res.body.data.messages.length !== 1) throw new Error("Chat History Length is wrong");
+      if(res.body.data.messages.length !== 2) throw new Error("Chat History Length is wrong");
       if(res.body.code !== 0) throw new Error("Unable to get chat history");
       if(res.body.data.messages[1].text !== "\uFFFD\uFFFD") throw new Error("char in chat message with unicode above U+FFFF was not replaced");
     })
