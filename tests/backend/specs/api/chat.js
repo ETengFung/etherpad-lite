@@ -98,8 +98,7 @@ describe('getChatHistory', function(){
     .expect(function(res){
       if(res.body.data.messages.length !== 3) throw new Error("Chat History Length is wrong");
       if(res.body.code !== 0) throw new Error("Unable to get chat history");
-      console.error("chat msgs:",res.body.data.messages);
-      if(res.body.data.messages.last.text !== "\uFFFD\uFFFD") throw new Error("char in chat message with unicode above U+FFFF was not replaced");
+      if(res.body.data.messages.first.last.text !== "\uFFFD\uFFFD") throw new Error("char in chat message with unicode above U+FFFF was not replaced");
     })
     .expect('Content-Type', /json/)
     .expect(200, done)
