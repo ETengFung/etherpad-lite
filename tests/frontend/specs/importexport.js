@@ -58,11 +58,11 @@ describe("import functionality", function(){
     var textWithNewLines = 'importedｙ text\nnewline'
     importrequest(textWithNewLines,importurl,"txt")
     helper.waitFor(function(){
-      return expect(getinnertext()).to.be('<span class="">imported🃟𛲠🌕 text</span>\n<span class="">newline</span>\n<br>\n')
+      return expect(getinnertext()).to.be('<span class="">importedｙ text</span>\n<span class="">newline</span>\n<br>\n')
     })
     var results = exportfunc(helper.padChrome$.window.location.href)
-    expect(results[0][1]).to.be("imported&#55356;&#56543;&#55343;&#56480;&#55356;&#57109; text<br>newline<br><br>")
-    expect(results[1][1]).to.be("imported🃟𛲠🌕 text\nnewline\n\n")
+    expect(results[0][1]).to.be("imported&#65369; text<br>newline<br><br>")
+    expect(results[1][1]).to.be("importedｙ text\nnewline\n\n")
     done()
   })
   it("import a pad with newlines from html", function(done){
@@ -70,10 +70,10 @@ describe("import functionality", function(){
     var htmlWithNewLines = '<html><body>htmltextｙ<br/>newline</body></html>'
     importrequest(htmlWithNewLines,importurl,"html")
     helper.waitFor(function(){
-      return expect(getinnertext()).to.be('<span class="">htmltext🃟𛲠🌕</span>\n<span class="">newline</span>\n<br>\n')
+      return expect(getinnertext()).to.be('<span class="">htmltextｙ</span>\n<span class="">newline</span>\n<br>\n')
     })
     var results = exportfunc(helper.padChrome$.window.location.href)
-    //expect(results[0][1]).to.be("htmltextｙ<br>newline<br><br>")
+    expect(results[0][1]).to.be("htmltext&#65369;<br>newline<br><br>")
     expect(results[1][1]).to.be("htmltextｙ\nnewline\n\n")
     done()
   })
@@ -82,27 +82,27 @@ describe("import functionality", function(){
     var htmlWithNewLines = '<html><body>htmltext<br/><span class="b s i u"><b><i><s><u>newlineｙ</u></s></i></b></body></html>'
     importrequest(htmlWithNewLines,importurl,"html")
     helper.waitFor(function(){
-      return expect(getinnertext()).to.be('<span class="">htmltext</span>\n<span class="b i s u"><b><i><s><u>newline🃟𛲠🌕</u></s></i></b></span>\n<br>\n')
+      return expect(getinnertext()).to.be('<span class="">htmltext</span>\n<span class="b i s u"><b><i><s><u>newlineｙ</u></s></i></b></span>\n<br>\n')
     })
     var results = exportfunc(helper.padChrome$.window.location.href)
-    expect(results[0][1]).to.be('htmltext<br><strong><em><s><u>newline&#55356;&#56543;&#55343;&#56480;&#55356;&#57109;</u></s></em></strong><br><br>')
+    expect(results[0][1]).to.be('htmltext<br><strong><em><s><u>newline&#65369;</u></s></em></strong><br><br>')
     expect(results[1][1]).to.be('htmltext\nnewlineｙ\n\n')
     done()
   })
   it("import a pad with bullets from html", function(done){
     var importurl = helper.padChrome$.window.location.href+'/import'
-    var htmlWithBullets = '<html><body><ul class="list-bullet1"><li>bullet line 1🃟𛲠🌕</li><li>bullet line 2</li><ul class="list-bullet2"><li>bullet2 line 1</li><li>bullet2 line 2</li></ul></ul></body></html>'
+    var htmlWithBullets = '<html><body><ul class="list-bullet1"><li>bullet line 1ｙ</li><li>bullet line 2</li><ul class="list-bullet2"><li>bullet2 line 1</li><li>bullet2 line 2</li></ul></ul></body></html>'
     importrequest(htmlWithBullets,importurl,"html")
     helper.waitFor(function(){
       return expect(getinnertext()).to.be('\
-<ul class="list-bullet1"><li><span class="">bullet line 1🃟𛲠🌕</span></li></ul>\n\
+<ul class="list-bullet1"><li><span class="">bullet line 1ｙ</span></li></ul>\n\
 <ul class="list-bullet1"><li><span class="">bullet line 2</span></li></ul>\n\
 <ul class="list-bullet2"><li><span class="">bullet2 line 1</span></li></ul>\n\
 <ul class="list-bullet2"><li><span class="">bullet2 line 2</span></li></ul>\n\
 <br>\n')
     })
     var results = exportfunc(helper.padChrome$.window.location.href)
-    expect(results[0][1]).to.be('<ul class="bullet"><li>bullet line 1&#55356;&#56543;&#55343;&#56480;&#55356;&#57109;</li><li>bullet line 2</li><ul class="bullet"><li>bullet2 line 1</li><li>bullet2 line 2</li></ul></ul><br>')
+    expect(results[0][1]).to.be('<ul class="bullet"><li>bullet line 1&#65369;</li><li>bullet line 2</li><ul class="bullet"><li>bullet2 line 1</li><li>bullet2 line 2</li></ul></ul><br>')
     expect(results[1][1]).to.be('\t* bullet line 1ｙ\n\t* bullet line 2\n\t\t* bullet2 line 1\n\t\t* bullet2 line 2\n\n')
     done()
   })
@@ -112,7 +112,7 @@ describe("import functionality", function(){
     importrequest(htmlWithBullets,importurl,"html")
     helper.waitFor(function(){
       return expect(getinnertext()).to.be('\
-<ul class="list-bullet1"><li><span class="">bullet line 1🃟𛲠🌕</span></li></ul>\n\
+<ul class="list-bullet1"><li><span class="">bullet line 1ｙ</span></li></ul>\n\
 <br>\n\
 <ul class="list-bullet1"><li><span class="">bullet line 2</span></li></ul>\n\
 <ul class="list-bullet2"><li><span class="">bullet2 line 1</span></li></ul>\n\
@@ -121,7 +121,7 @@ describe("import functionality", function(){
 <br>\n')
     })
     var results = exportfunc(helper.padChrome$.window.location.href)
-    expect(results[0][1]).to.be('<ul class="bullet"><li>bullet line 1&#55356;&#56543;&#55343;&#56480;&#55356;&#57109;</li></ul><br><ul class="bullet"><li>bullet line 2</li><ul class="bullet"><li>bullet2 line 1</li></ul></ul><br><ul><ul class="bullet"><li>bullet2 line 2</li></ul></ul><br>')
+    expect(results[0][1]).to.be('<ul class="bullet"><li>bullet line 1&#65369;</li></ul><br><ul class="bullet"><li>bullet line 2</li><ul class="bullet"><li>bullet2 line 1</li></ul></ul><br><ul><ul class="bullet"><li>bullet2 line 2</li></ul></ul><br>')
     expect(results[1][1]).to.be('\t* bullet line 1ｙ\n\n\t* bullet line 2\n\t\t* bullet2 line 1\n\n\t\t* bullet2 line 2\n\n')
     done()
   })
@@ -134,13 +134,13 @@ describe("import functionality", function(){
 <ul class="list-bullet1"><li><span class="">bullet line 1</span></li></ul>\n\<br>\n\
 <ul class="list-bullet1"><li><span class="">bullet line 2</span></li></ul>\n\
 <ul class="list-bullet2"><li><span class="">bullet2 line 1</span></li></ul>\n<br>\n\
-<ul class="list-bullet4"><li><span class="b i s u"><b><i><s><u>🃟𛲠🌕bullet4 line 2 bisu</u></s></i></b></span></li></ul>\n\
+<ul class="list-bullet4"><li><span class="b i s u"><b><i><s><u>ｙbullet4 line 2 bisu</u></s></i></b></span></li></ul>\n\
 <ul class="list-bullet4"><li><span class="b s"><b><s>bullet4 line 2 bs</s></b></span></li></ul>\n\
 <ul class="list-bullet4"><li><span class="u"><u>bullet4 line 2 u</u></span><span class="i s u"><i><s><u>uis</u></s></i></span></li></ul>\n\
 <br>\n')
     })
     var results = exportfunc(helper.padChrome$.window.location.href)
-    expect(results[0][1]).to.be('<ul class="bullet"><li>bullet line 1</li></ul><br><ul class="bullet"><li>bullet line 2</li><ul class="bullet"><li>bullet2 line 1</li></ul></ul><br><ul><ul><ul><ul class="bullet"><li><strong><em><s><u>&#55356;&#56543;&#55343;&#56480;&#55356;&#57109;bullet4 line 2 bisu</u></s></em></strong></li><li><strong><s>bullet4 line 2 bs</s></strong></li><li><u>bullet4 line 2 u<em><s>uis</s></em></u></li></ul></ul></ul></ul><br>')
+    expect(results[0][1]).to.be('<ul class="bullet"><li>bullet line 1</li></ul><br><ul class="bullet"><li>bullet line 2</li><ul class="bullet"><li>bullet2 line 1</li></ul></ul><br><ul><ul><ul><ul class="bullet"><li><strong><em><s><u>&#65369;bullet4 line 2 bisu</u></s></em></strong></li><li><strong><s>bullet4 line 2 bs</s></strong></li><li><u>bullet4 line 2 u<em><s>uis</s></em></u></li></ul></ul></ul></ul><br>')
     expect(results[1][1]).to.be('\t* bullet line 1\n\n\t* bullet line 2\n\t\t* bullet2 line 1\n\n\t\t\t\t* ｙbullet4 line 2 bisu\n\t\t\t\t* bullet4 line 2 bs\n\t\t\t\t* bullet4 line 2 uuis\n\n')
     done()
   })
@@ -164,15 +164,15 @@ describe("import functionality", function(){
 <ul class="list-bullet1"><li><span class="">bullet line 1</span></li></ul>\n\<br>\n\
 <ul class="list-bullet1"><li><span class="">bullet line 2</span></li></ul>\n\
 <ul class="list-bullet2"><li><span class="">bullet2 line 1</span></li></ul>\n<br>\n\
-<ul class="list-bullet4"><li><span class="b i s u"><b><i><s><u>🃟𛲠🌕bullet4 line 2 bisu</u></s></i></b></span></li></ul>\n\
+<ul class="list-bullet4"><li><span class="b i s u"><b><i><s><u>ｙbullet4 line 2 bisu</u></s></i></b></span></li></ul>\n\
 <ul class="list-bullet4"><li><span class="b s"><b><s>bullet4 line 2 bs</s></b></span></li></ul>\n\
 <ul class="list-bullet4"><li><span class="u"><u>bullet4 line 2 u</u></span><span class="i s u"><i><s><u>uis</u></s></i></span></li></ul>\n\
 <br>\n')
     })
 
     var results = exportfunc(helper.padChrome$.window.location.href)
-    //expect(results[0][1]).to.be('<ul class="bullet"><li>bullet line 1</li><li>bullet line 2</li><ul class="bullet"><li>bullet2 line 1</li><ul><ul class="bullet"><li>&#55356;&#56543;&#55343;&#56480;&#55356;&#57109;bullet4 line 2</li><li>bullet4 line 2</li><li>bullet4 line 2</li></ul><li>bullet3 line 1</li></ul></ul><li>bullet2 line 1</li></ul><br>')
-    //expect(results[1][1]).to.be('\t* bullet line 1\n\t* bullet line 2\n\t\t* bullet2 line 1\n\t\t\t\t* ｙbullet4 line 2\n\t\t\t\t* bullet4 line 2\n\t\t\t\t* bullet4 line 2\n\t\t\t* bullet3 line 1\n\t* bullet2 line 1\n\n')
+    expect(results[0][1]).to.be('<ul class="bullet"><li>bullet line 1</li><li>bullet line 2</li><ul class="bullet"><li>bullet2 line 1</li><ul><ul class="bullet"><li>&#65369;bullet4 line 2</li><li>bullet4 line 2</li><li>bullet4 line 2</li></ul><li>bullet3 line 1</li></ul></ul><li>bullet2 line 1</li></ul><br>')
+    expect(results[1][1]).to.be('\t* bullet line 1\n\t* bullet line 2\n\t\t* bullet2 line 1\n\t\t\t\t* ｙbullet4 line 2\n\t\t\t\t* bullet4 line 2\n\t\t\t\t* bullet4 line 2\n\t\t\t* bullet3 line 1\n\t* bullet2 line 1\n\n')
     done()
   })
   it("import a pad with 8 levels of bullets and newlines and attributes from html", function(done){
@@ -184,7 +184,7 @@ describe("import functionality", function(){
 <ul class="list-bullet1"><li><span class="">bullet line 1</span></li></ul>\n\<br>\n\
 <ul class="list-bullet1"><li><span class="">bullet line 2</span></li></ul>\n\
 <ul class="list-bullet2"><li><span class="">bullet2 line 1</span></li></ul>\n<br>\n\
-<ul class="list-bullet4"><li><span class="b i s u"><b><i><s><u>🃟𛲠🌕bullet4 line 2 bisu</u></s></i></b></span></li></ul>\n\
+<ul class="list-bullet4"><li><span class="b i s u"><b><i><s><u>ｙbullet4 line 2 bisu</u></s></i></b></span></li></ul>\n\
 <ul class="list-bullet4"><li><span class="b s"><b><s>bullet4 line 2 bs</s></b></span></li></ul>\n\
 <ul class="list-bullet4"><li><span class="u"><u>bullet4 line 2 u</u></span><span class="i s u"><i><s><u>uis</u></s></i></span></li></ul>\n\
 <ul class="list-bullet8"><li><span class="">foo</span></li></ul>\n\
@@ -193,7 +193,7 @@ describe("import functionality", function(){
 <br>\n')
     })
     var results = exportfunc(helper.padChrome$.window.location.href)
-    expect(results[0][1]).to.be('<ul class="bullet"><li>bullet line 1</li></ul><br><ul class="bullet"><li>bullet line 2</li><ul class="bullet"><li>bullet2 line 1</li></ul></ul><br><ul><ul><ul><ul class="bullet"><li><strong><em><s><u>&#55356;&#56543;&#55343;&#56480;&#55356;&#57109;bullet4 line 2 bisu</u></s></em></strong></li><li><strong><s>bullet4 line 2 bs</s></strong></li><li><u>bullet4 line 2 u<em><s>uis</s></em></u></li><ul><ul><ul><ul class="bullet"><li>foo</li><li><strong><s>foobar bs</s></strong></li></ul></ul></ul><li>foobar</li></ul></ul></ul></ul></ul><br>') 
+    expect(results[0][1]).to.be('<ul class="bullet"><li>bullet line 1</li></ul><br><ul class="bullet"><li>bullet line 2</li><ul class="bullet"><li>bullet2 line 1</li></ul></ul><br><ul><ul><ul><ul class="bullet"><li><strong><em><s><u>&#65369;bullet4 line 2 bisu</u></s></em></strong></li><li><strong><s>bullet4 line 2 bs</s></strong></li><li><u>bullet4 line 2 u<em><s>uis</s></em></u></li><ul><ul><ul><ul class="bullet"><li>foo</li><li><strong><s>foobar bs</s></strong></li></ul></ul></ul><li>foobar</li></ul></ul></ul></ul></ul><br>') 
     expect(results[1][1]).to.be('\t* bullet line 1\n\n\t* bullet line 2\n\t\t* bullet2 line 1\n\n\t\t\t\t* ｙbullet4 line 2 bisu\n\t\t\t\t* bullet4 line 2 bs\n\t\t\t\t* bullet4 line 2 uuis\n\t\t\t\t\t\t\t\t* foo\n\t\t\t\t\t\t\t\t* foobar bs\n\t\t\t\t\t* foobar\n\n')
     done()
   })
