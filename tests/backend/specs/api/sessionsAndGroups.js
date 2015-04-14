@@ -114,7 +114,9 @@ describe('createGroupIfNotExistsFor', function(){
   it('Cannot create group mapper with astral code points', function(done) {
     api.get(endPoint('createGroupIfNotExistsFor')+"&groupMapper=management\uD835\uDC00")
     .expect(function(res){
-      if(res.body.code !== 0 || !res.body.data.groupID) throw new Error("Sessions show as existing for this group");
+      console.error(res.body.code)
+      console.error(res.body.data.groupID)
+      if(res.body.code === 0 || res.body.data.groupID) throw new Error("Group with astral");
     })
     .expect('Content-Type', /json/)
     .expect(200, done)
@@ -148,9 +150,7 @@ describe('createAuthor', function(){
   it('Cannot create author outside BMP', function(done) {
     api.get(endPoint('createAuthor')+"&name=\uD835\uDC00")
     .expect(function(res){
-      console.error("body:",res.body.code)
-      console.error("id:",res.body.data.authorID)
-      if(res.body.code === 0 || res.body.data.authorID) throw new Error("Created author outside BMP");
+      if(!res.body.code === 1 || res.body.data.authorID) throw new Error("Created author outside BMP");
     })
     .expect('Content-Type', /json/)
     .expect(200, done)
