@@ -101,6 +101,16 @@ describe('createPad', function(){
     .expect('Content-Type', /json/)
     .expect(200, done)
   });
+  // raises URIError
+  //it('cannot create a new Pad with broken astral', function(done) {
+  //  api.get(endPoint('createPad')+"&padID="+padID+"\uD83C")
+  //  .expect(function(res){
+  //    console.error(res.body)
+  //    if(res.body.code !== 0) throw new Error("Pad created with broken astral");
+  //  })
+  //  .expect('Content-Type', /json/)
+  //  .expect(200, done)
+  //});
 })
 
 describe('getRevisionsCount', function(){
@@ -367,6 +377,31 @@ describe('createPad', function(){
     .expect('Content-Type', /json/)
     .expect(200, done)
   });
+  it('cannot create pad with astral', function(done) {
+    api.get(endPoint('createPad')+"&padID="+padID+"\uD83C\uDCDF")
+    .expect(function(res){
+      console.error(res.body)
+      if(res.body.code != 1) throw new Error("Could create padID with astral")
+    })
+    .expect('Content-Type', /json/)
+    .expect(200, done)
+  });
+  it('cannot create pad with astral', function(done) {
+    api.get(endPoint('createPad')+"&padID="+padID+"\uD83C")
+    .expect(function(res){
+      if(res.body.code != 1) throw new Error("Could create pad with half surrogate")
+    })
+    .expect('Content-Type', /json/)
+    .expect(200, done)
+  });
+  it('cannot create pad with astral', function(done) {
+    api.get(endPoint('createPad')+"&padID="+padID+"\uDCDF")
+    .expect(function(res){
+      if(res.body.code != 1) throw new Error("Could create pad with half surrogate")
+    })
+    .expect('Content-Type', /json/)
+    .expect(200, done)
+  });
 })
 
 describe('setText', function(){
@@ -510,7 +545,10 @@ describe('getHTML', function(){
     api.get(endPoint('getHTML')+"&padID="+testPadId)
     .expect(function(res){
       var ehtml = res.body.data.html.replace("<br></body>", "</body>").toLowerCase();
-      var uhtml = ULhtml_bmp.toLowerCase().replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,"\uFFFD\uFFFD");
+      //ehtml.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,'&#55356;&#56543;');
+      //ehtml.replace(/ｙ/g,'&#65369;');
+      var uhtml = ULhtml_bmp.replace(/\uD83C\uDCDF/g,"&#55356;&#56543;"); //.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,"\uFFFD\uFFFD");
+      uhtml = uhtml.replace(/ｙ/g,'&#65369;').toLowerCase();
       if(ehtml !== uhtml) throw new Error("Imported HTML does not match served HTML")
     })
     .expect('Content-Type', /json/)
