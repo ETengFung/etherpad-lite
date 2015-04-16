@@ -105,6 +105,8 @@ describe('createPad', function(){
   });
 })
 //TODO
+//test should reflect what happens with databases that have case-insensitive
+//collations
 describe('createPad with different case', function(){
   it('creates a new Pad', function(done) {
     var index;
