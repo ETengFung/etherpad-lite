@@ -103,6 +103,27 @@ describe('createPad', function(){
     .expect('Content-Type', /json/)
     .expect(200, done)
   });
+})
+//TODO
+describe('createPad with different case', function(){
+  it('creates a new Pad', function(done) {
+    var index;
+    if(index = testPadId[1].match(/[a-zA-Z]/)){
+      if(testPadId[1].match(/[a-z]/)){
+        testPadId[1] = testPadId[1].toUpperCase();
+      } else {
+        testPadId[1] = testPadId[1].toLowerCase();
+      }
+    } else {
+      console.error('could not test createPad with different case because only numbers where used')
+    }
+    api.get(endPoint('createPad')+"&padID="+testPadId)
+    .expect(function(res){
+      if(res.body.code !== 0) throw new Error("Unable to create new Pad");
+    })
+    .expect('Content-Type', /json/)
+    .expect(200, done)
+  });
   // raises URIError
   //it('cannot create a new Pad with broken astral', function(done) {
   //  api.get(endPoint('createPad')+"&padID="+padID+"\uD83C")
