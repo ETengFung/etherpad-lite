@@ -103,6 +103,16 @@ describe('createPad', function(){
     .expect('Content-Type', /json/)
     .expect(200, done)
   });
+  // raises URIError
+  //it('cannot create a new Pad with broken astral', function(done) {
+  //  api.get(endPoint('createPad')+"&padID="+padID+"\uD83C")
+  //  .expect(function(res){
+  //    console.error(res.body)
+  //    if(res.body.code !== 0) throw new Error("Pad created with broken astral");
+  //  })
+  //  .expect('Content-Type', /json/)
+  //  .expect(200, done)
+  //});
 })
 //TODO
 //test should reflect what happens with databases that have case-insensitive
