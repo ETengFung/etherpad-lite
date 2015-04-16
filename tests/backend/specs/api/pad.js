@@ -401,16 +401,15 @@ describe('createPad', function(){
     .expect(200, done)
   });
   it('cannot create pad with astral', function(done) {
-    api.get(endPoint('createPad')+"&padID="+padID+"\uD83C\uDCDF")
+    api.get(endPoint('createPad')+"&padID="+testPadId+"\uD83C\uDCDF")
     .expect(function(res){
-      console.error(res.body)
       if(res.body.code != 1) throw new Error("Could create padID with astral")
     })
     .expect('Content-Type', /json/)
     .expect(200, done)
   });
   it('cannot create pad with astral', function(done) {
-    api.get(endPoint('createPad')+"&padID="+padID+"\uD83C")
+    api.get(endPoint('createPad')+"&padID="+testPadId+"\uD83C")
     .expect(function(res){
       if(res.body.code != 1) throw new Error("Could create pad with half surrogate")
     })
@@ -418,7 +417,7 @@ describe('createPad', function(){
     .expect(200, done)
   });
   it('cannot create pad with astral', function(done) {
-    api.get(endPoint('createPad')+"&padID="+padID+"\uDCDF")
+    api.get(endPoint('createPad')+"&padID="+testPadId+"\uDCDF")
     .expect(function(res){
       if(res.body.code != 1) throw new Error("Could create pad with half surrogate")
     })
