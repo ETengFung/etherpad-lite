@@ -261,12 +261,21 @@ describe('listPads', function(){
   });
 })
 
+var padid_astral = makeid() + "\uD83C\uDCDF";
 describe('createGroupPad', function(){
   it('Creates a Group Pad', function(done) {
     api.get(endPoint('createGroupPad')+"&groupID="+groupID+"&padName="+padID)
     .expect(function(res){
       if(res.body.code !== 0) throw new Error("Unable to create group pad");
       padID = res.body.data.padID;
+    })
+    .expect('Content-Type', /json/)
+    .expect(200, done)
+  });
+  it('Cannot create group pad with astral PadID', function(done) {
+    api.get(endPoint('createGroupPad')+"&groupID="+groupID+"&padName="+padid_astral)
+    .expect(function(res){
+      if(res.body.code !== 1) throw new Error("Can use astral code points in group padid");
     })
     .expect('Content-Type', /json/)
     .expect(200, done)
@@ -384,5 +393,5 @@ function makeid()
   for( var i=0; i < 5; i++ ){
     text += possible.charAt(Math.floor(Math.random() * possible.length));
   }
-  return text+"\uD83C\uDCDFｙ\uD83C\uDCDF";
+  return text+"ｙ";
 }
