@@ -286,6 +286,7 @@ Pad.prototype.text = function text() {
 Pad.prototype.setText = function setText(newText) {
   //clean the new text
   newText = exports.cleanText(newText);
+  newText = newText.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,"\uFFFD\uFFFD");
 
   var oldText = this.text();
 
