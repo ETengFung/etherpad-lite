@@ -28,7 +28,8 @@ var jsonableList = ["pool"];
  * @param txt
  */
 exports.cleanText = function (txt) {
-  return txt.replace(/\r\n/g,'\n').replace(/\r/g,'\n').replace(/\t/g, '        ').replace(/\xa0/g, ' ');
+  return txt.replace(/\r\n/g,'\n').replace(/\r/g,'\n').replace(/\t/g, '        ').replace(/\xa0/g, ' ')
+    .replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,"\uFFFD\uFFFD");
 };
 
 
@@ -78,6 +79,7 @@ Pad.prototype.appendRevision = function appendRevision(aChangeset, author) {
     author = '';
 
   var newAText = Changeset.applyToAText(aChangeset, this.atext, this.pool);
+  newAText = newAText.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,"\uFFFD\uFFFD");
   Changeset.copyAText(newAText, this.atext);
 
   var newRev = ++this.head;
@@ -286,7 +288,6 @@ Pad.prototype.text = function text() {
 Pad.prototype.setText = function setText(newText) {
   //clean the new text
   newText = exports.cleanText(newText);
-  newText = newText.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,"\uFFFD\uFFFD");
 
   var oldText = this.text();
 
