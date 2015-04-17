@@ -443,7 +443,7 @@ describe('getText', function(){
     api.get(endPoint('getText')+"&padID="+testPadId)
     .expect(function(res){
       if(res.body.code !== 0) throw new Error("Pad Get Text failed")
-      if(res.body.data.text !== text+"\n") throw new Error("Pad Text not set properly");
+      if(res.body.data.text !== text.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,"\uFFFD\uFFFD")+"\n") throw new Error("Pad Text not set properly");
     })
     .expect('Content-Type', /json/)
     .expect(200, done)
@@ -476,7 +476,7 @@ describe('getText', function(){
   it('Gets text on a pad Id', function(done) {
     api.get(endPoint('getText')+"&padID="+newPadId)
     .expect(function(res){
-      if(res.body.data.text !== text+"\n") throw new Error("Pad Get Text failed")
+      if(res.body.data.text !== text.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,"\uFFFD\uFFFD")+"\n") throw new Error("Pad text is wrong");
     })
     .expect('Content-Type', /json/)
     .expect(200, done)
@@ -498,7 +498,7 @@ describe('getText', function(){
   it('Gets text on a pad Id', function(done) {
     api.get(endPoint('getText')+"&padID="+testPadId)
     .expect(function(res){
-      if(res.body.data.text !== text+"\n") throw new Error("Pad Get Text failed")
+      if(res.body.data.text !== text.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,"\uFFFD\uFFFD")+"\n") throw new Error("Pad Text not set properly");
     })
     .expect('Content-Type', /json/)
     .expect(200, done)
@@ -570,7 +570,7 @@ describe('getHTML', function(){
       var ehtml = res.body.data.html.replace("<br></body>", "</body>").toLowerCase();
       //ehtml.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,'&#55356;&#56543;');
       //ehtml.replace(/ｙ/g,'&#65369;');
-      var uhtml = ULhtml_bmp.replace(/\uD83C\uDCDF/g,"&#55356;&#56543;"); //.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,"\uFFFD\uFFFD");
+      var uhtml = ULhtml_bmp.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,"&#65533;&#65533;");
       uhtml = uhtml.replace(/ｙ/g,'&#65369;').toLowerCase();
       if(ehtml !== uhtml) throw new Error("Imported HTML does not match served HTML")
     })
