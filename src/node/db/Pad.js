@@ -78,8 +78,10 @@ Pad.prototype.appendRevision = function appendRevision(aChangeset, author) {
   if(!author)
     author = '';
 
+  //HACK
+  aChangeset = aChangeset.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,"\uFFFD\uFFFD");
   var newAText = Changeset.applyToAText(aChangeset, this.atext, this.pool);
-  newAText = newAText.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,"\uFFFD\uFFFD");
+  //newAText = newAText.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,"\uFFFD\uFFFD");
   Changeset.copyAText(newAText, this.atext);
 
   var newRev = ++this.head;
