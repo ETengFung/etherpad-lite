@@ -653,7 +653,7 @@ function generateLongText(){
   var text = "";
   var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-  for( var i=0; i < 79995; i++ ){
+  for( var i=0; i < 80000; i++ ){
     text += possible.charAt(Math.floor(Math.random() * possible.length));
   }
   return text + "\uD83C\uDCDFｙ\uD83C\uDCDF";
