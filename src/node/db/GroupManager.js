@@ -209,6 +209,12 @@ exports.createGroupIfNotExistsFor = function(groupMapper, callback)
     callback(new customError("groupMapper is no string","apierror"));
     return;
   }
+  // code points above U+FFFF
+  if(groupMapper.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]/))
+  {
+    callback(new customError("group mapper with unrepresentable character","apierror"));
+    return;
+  }
   
   //try to get a group for this mapper
   db.get("mapper2group:"+groupMapper, function(err, groupID)
