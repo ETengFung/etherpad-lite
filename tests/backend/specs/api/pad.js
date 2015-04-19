@@ -103,6 +103,32 @@ describe('createPad', function(){
     .expect(200, done)
   });
 
+  it('cannot create pad with astral', function(done) {
+    api.get(endPoint('createPad')+"&padID="+testPadId+"\uD83C\uDCDF")
+    .expect(function(res){
+      if(res.body.code != 1) throw new Error("Could create padID with astral")
+    })
+    .expect('Content-Type', /json/)
+    .expect(200, done)
+  });
+  //raises URIError
+  //it('cannot create pad with single high surrogate', function(done) {
+  //  api.get(endPoint('createPad')+"&padID="+testPadId+"\uD83C")
+  //  .expect(function(res){
+  //    if(res.body.code != 1) throw new Error("Could create pad with single surrogate")
+  //  })
+  //  .expect('Content-Type', /json/)
+  //  .expect(200, done)
+  //});
+  //it('cannot create pad with signle low surrogate', function(done) {
+  //  api.get(endPoint('createPad')+"&padID="+testPadId+"\uDCDF")
+  //  .expect(function(res){
+  //    if(res.body.code != 1) throw new Error("Could create pad with single surrogate")
+  //  })
+  //  .expect('Content-Type', /json/)
+  //  .expect(200, done)
+  //});
+
   //TODO
   //test should reflect what happens with databases that have case-insensitive
   //collations
@@ -588,7 +614,7 @@ function makeid()
   for( var i=0; i < 5; i++ ){
     text += possible.charAt(Math.floor(Math.random() * possible.length));
   }
-  return text;
+  return text+"ｙ";
 }
 
 function generateLongText(){
