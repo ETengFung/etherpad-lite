@@ -20,8 +20,22 @@ describe("All the alphabet works n stuff", function(){
     firstTextElement.sendkeys(expectedString); // insert the string
 
     helper.waitFor(function(){
-      return inner$("div").first().text() === expectedString.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,"\uFFFD\uFFFD");
+      return inner$("div").first().text() === expectedString;
     }, 2000).done(done);
+
+    // refresh and check if the chars got replaced
+    setTimeout(function(){ 
+      helper.newPad({ // get a new pad, but don't clear the cookies
+        clearCookies: false
+        , cb: function(){
+          var chrome$ = helper.padChrome$;
+          helper.waitFor(function(){
+            return inner$("div").first().text() === expectedString.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,"\uFFFD\uFFFD");
+          }, 2000).done(done);
+          done();
+        }
+      });
+    }, 1000);
   });
 
 });
