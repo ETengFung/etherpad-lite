@@ -1,7 +1,10 @@
 describe("Chat messages and UI", function(){
+  // we need to know because we refresh the pad
+  var padID = "FRONTEND_TEST_" + helper.randomString(20);
+
   //create a new pad before each test run
   beforeEach(function(cb){
-    helper.newPad(cb);
+    helper.newPad(cb, padID);
     this.timeout(60000);
   });
 
@@ -23,7 +26,7 @@ describe("Chat messages and UI", function(){
       return chrome$("#chattext").children("p").length !== 0; // wait until the chat message shows up
     }).done(function(){
       var $firstChatMessage = chrome$("#chattext").children("p");
-      var containsMessage = $firstChatMessage.text().indexOf("\uFFFD\uFFFDｙ\uFFFD\uFFFDｙ\uFFFD\uFFFDｙ") !== -1; // does the string contain ｙ and U+FFFD?
+      var containsMessage = $firstChatMessage.text().indexOf("\uD83C\uDCDFｙ\uD83C\uDCDFｙ\uD83C\uDCDFｙ") !== -1; // does the string contain ｙ and U+FFFD?
       expect(containsMessage).to.be(true); // expect the first chat message to contain JohnMcLear
 
       // do a slightly more thorough check
@@ -32,7 +35,32 @@ describe("Chat messages and UI", function(){
       var time = $firstChatMessage.children(".time");
       var timeValue = time.text();
       var discoveredValue = $firstChatMessage.text();
-      var chatMsgExists = (discoveredValue.indexOf("\uFFFD\uFFFDｙ\uFFFD\uFFFDｙ\uFFFD\uFFFDｙ") !== -1);
+      var chatMsgExists = (discoveredValue.indexOf("\uD83C\uDCDFｙ\uD83C\uDCDFｙ\uD83C\uDCDFｙ") !== -1);
+      expect(chatMsgExists).to.be(true);
+      done();
+    });
+
+  });
+
+  it("after refresh, chat message is replaced", function(done) {
+    var inner$ = helper.padInner$; 
+    var chrome$ = helper.padChrome$; 
+    // replace code points above U+FFFF with two U+FFFD
+    var chatValue = "\uFFFD\uFFFDｙ\uFFFD\uFFFDｙ\uFFFD\uFFFDｙ";
+
+    //check if chat shows up
+    helper.waitFor(function(){
+      return chrome$("#chattext").children("p").length !== 0; // wait until the chat message shows up
+    }).done(function(){
+      var $firstChatMessage = chrome$("#chattext").children("p");
+
+      // do a slightly more thorough check
+      var username = $firstChatMessage.children("b");
+      var usernameValue = username.text();
+      var time = $firstChatMessage.children(".time");
+      var timeValue = time.text();
+      var discoveredValue = $firstChatMessage.text();
+      var chatMsgExists = (discoveredValue.indexOf(chatValue) !== -1);
       expect(chatMsgExists).to.be(true);
       done();
     });
@@ -56,7 +84,7 @@ describe("Chat messages and UI", function(){
       return chrome$("#chattext").children("p").length !== 0; // wait until the chat message shows up
     }).done(function(){
       // check that the empty message is not there
-      expect(chrome$("#chattext").children("p").length).to.be(1);
+      expect(chrome$("#chattext").children("p").length).to.be(2);
       // check that the received message is not the empty one
       var $firstChatMessage = chrome$("#chattext").children("p");
       var containsMessage = $firstChatMessage.text().indexOf("mluto") !== -1;
