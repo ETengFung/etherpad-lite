@@ -1,5 +1,5 @@
 describe("All the alphabet works n stuff", function(){
-  var expectedString = "abcdefghijklmnopqrstuvwxyz";
+  var expectedString = "abcdefghijklmnopqrstuvwxyｙz\uD83C\uDCDF";
 
   //create a new pad before each test run
   beforeEach(function(cb){
@@ -20,7 +20,7 @@ describe("All the alphabet works n stuff", function(){
     firstTextElement.sendkeys(expectedString); // insert the string
 
     helper.waitFor(function(){
-      return inner$("div").first().text() === expectedString;
+      return inner$("div").first().text() === expectedString.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,"\uFFFD\uFFFD");
     }, 2000).done(done);
   });
 

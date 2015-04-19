@@ -16,7 +16,7 @@ describe("change username value", function(){
     var $usernameInput = chrome$("#myusernameedit");
     $usernameInput.click();
 
-    $usernameInput.val('John McLear');
+    $usernameInput.val('ｙ');
     $usernameInput.blur();
 
     setTimeout(function(){ //give it a second to save the username on the server side
@@ -30,7 +30,7 @@ describe("change username value", function(){
           $userButton.click();
 
           var $usernameInput = chrome$("#myusernameedit");
-          expect($usernameInput.val()).to.be('John McLear')
+          expect($usernameInput.val()).to.be('ｙ')
           done();
         }
       });
@@ -49,14 +49,14 @@ describe("change username value", function(){
     var $usernameInput = chrome$("#myusernameedit");
     $usernameInput.click();
 
-    $usernameInput.val('John McLear');
+    $usernameInput.val('ｙ');
     $usernameInput.blur();
 
     //click on the chat button to make chat visible
     var $chatButton = chrome$("#chaticon");
     $chatButton.click();
     var $chatInput = chrome$("#chatinput");
-    $chatInput.sendkeys('O hi'); // simulate a keypress of typing JohnMcLear
+    $chatInput.sendkeys('O hi'); // simulate a keypress of typing
     $chatInput.sendkeys('{enter}'); // simulate a keypress of enter actually does evt.which = 10 not 13
 
     //check if chat shows up
@@ -64,8 +64,40 @@ describe("change username value", function(){
       return chrome$("#chattext").children("p").length !== 0; // wait until the chat message shows up
     }).done(function(){
       var $firstChatMessage = chrome$("#chattext").children("p");
-      var containsJohnMcLear = $firstChatMessage.text().indexOf("John McLear") !== -1; // does the string contain John McLear
-      expect(containsJohnMcLear).to.be(true); // expect the first chat message to contain JohnMcLear
+      var containsBMP = $firstChatMessage.text().indexOf("ｙ") !== -1; // does the string contain BMP
+      expect(containsBMP).to.be(true); // expect the first chat message to contain BMP 
+      done();
+    });
+  });
+
+  it("Chars outside BMP in user name are replaced with \uFFFD", function(done) {
+    var inner$ = helper.padInner$;
+    var chrome$ = helper.padChrome$;
+
+    //click on the settings button to make settings visible
+    var $userButton = chrome$(".buttonicon-showusers");
+    $userButton.click();
+    
+    var $usernameInput = chrome$("#myusernameedit");
+    $usernameInput.click();
+
+    $usernameInput.val('ｙ\uD835\uDC00');
+    $usernameInput.blur();
+
+    //click on the chat button to make chat visible
+    var $chatButton = chrome$("#chaticon");
+    $chatButton.click();
+    var $chatInput = chrome$("#chatinput");
+    $chatInput.sendkeys('O hi'); // simulate a keypress of typing
+    $chatInput.sendkeys('{enter}'); // simulate a keypress of enter actually does evt.which = 10 not 13
+
+    //check if chat shows up
+    helper.waitFor(function(){
+      return chrome$("#chattext").children("p").length !== 0; // wait until the chat message shows up
+    }).done(function(){
+      var $firstChatMessage = chrome$("#chattext").children("p");
+      var containsBMP = $firstChatMessage.text().indexOf("ｙ\uFFFD\uFFFD") !== -1; // does the string contain replaced character
+      expect(containsBMP).to.be(true); // expect the first chat message to contain replaced character 
       done();
     });
   });

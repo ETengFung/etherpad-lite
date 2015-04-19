@@ -34,4 +34,27 @@ describe("delete keystroke", function(){
 
     done();
   });
+
+  it("deletes a high code from BMP with backspace ", function(done) {
+    var inner$ = helper.padInner$; 
+    var chrome$ = helper.padChrome$; 
+    
+    var firstTextElement = inner$("div").first();
+    
+    firstTextElement.sendkeys('{selectall}');
+    firstTextElement.sendkeys('{del}');
+    var string = "ｙ\uFFFD"
+    firstTextElement.sendkeys(string);
+ 
+    var newLength = inner$("div").first().text().length;
+    expect(newLength).to.be(1);
+    firstTextElement.sendkeys('{backspace}');
+    firstTextElement.sendkeys('{backspace}');
+
+    newLength = inner$("div").first().text().length;
+    
+    expect(newLength).to.be(0);
+
+    done();
+  });
 });
