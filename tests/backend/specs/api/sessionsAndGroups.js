@@ -9,7 +9,6 @@ var filePath = path.join(__dirname, '../../../../APIKEY.txt');
 var apiKey = fs.readFileSync(filePath,  {encoding: 'utf-8'});
 apiKey = apiKey.replace(/\n$/, "");
 var apiVersion = 1;
-var testPadId = makeid();
 var groupID = "";
 var authorID = "";
 var sessionID = "";
@@ -103,6 +102,22 @@ describe('createGroupIfNotExistsFor', function(){
     .expect('Content-Type', /json/)
     .expect(200, done)
   });
+  it('Creates a group mapper and supports BMP', function(done) {
+    api.get(endPoint('createGroupIfNotExistsFor')+"&groupMapper=managementｙ")
+    .expect(function(res){
+      if(res.body.code !== 0 || !res.body.data.groupID) throw new Error("Sessions show as existing for this group");
+    })
+    .expect('Content-Type', /json/)
+    .expect(200, done)
+  });
+  it('Cannot create group mapper with astral code points', function(done) {
+    api.get(endPoint('createGroupIfNotExistsFor')+"&groupMapper=management\uD835\uDC00")
+    .expect(function(res){
+      if(!res.body.code === 500) throw new Error("Group with astral code points was created");
+    })
+    .expect('Content-Type', /json/)
+    .expect(200, done)
+  });
 })
 
 describe('createGroup', function(){
@@ -129,10 +144,18 @@ describe('createAuthor', function(){
 })
 
 describe('createAuthor', function(){
-  it('Creates an author with a name set', function(done) {
-    api.get(endPoint('createAuthor')+"&name=john")
+  it('Cannot create author outside BMP', function(done) {
+    api.get(endPoint('createAuthor')+"&name=\uD835\uDC00")
     .expect(function(res){
-      if(res.body.code !== 0 || !res.body.data.authorID) throw new Error("Unable to create user with name set");
+      if(!res.body.code === 500) throw new Error("Created author outside BMP");
+    })
+    .expect('Content-Type', /json/)
+    .expect(200, done)
+  });
+  it('Can create author in BMP', function(done) {
+    api.get(endPoint('createAuthor')+"&name=ｙ")
+    .expect(function(res){
+      if(res.body.code !== 0 || !res.body.data.authorID) throw new Error("Unable to create author within BMP");
       authorID = res.body.data.authorID; // we will be this author for the rest of the tests
     })
     .expect('Content-Type', /json/)
@@ -155,7 +178,7 @@ describe('getAuthorName', function(){
   it('Gets the author name', function(done) {
     api.get(endPoint('getAuthorName')+"&authorID="+authorID)
     .expect(function(res){
-      if(res.body.code !== 0 || !res.body.data === "john") throw new Error("Unable to get Author Name from Author ID");
+      if(res.body.code !== 0 || !res.body.data === "ｙ") throw new Error("Unable to get Author Name within BMP");
     })
     .expect('Content-Type', /json/)
     .expect(200, done)
@@ -247,6 +270,30 @@ describe('createGroupPad', function(){
     .expect('Content-Type', /json/)
     .expect(200, done)
   });
+  it('Cannot create group pad with astral PadID', function(done) {
+    api.get(endPoint('createGroupPad')+"&groupID="+groupID+"&padName="+padID+"\uD83C\uDCDF")
+    .expect(function(res){
+      if(res.body.code !== 1) throw new Error("Can use astral code points in group padid");
+    })
+    .expect('Content-Type', /json/)
+    .expect(200, done)
+  });
+  //raises URIError
+  //it('Cannot create group pad with broken astral PadID', function(done) {
+  //  api.get(endPoint('createGroupPad')+"&groupID="+groupID+"&padName="+padID+"\uD83C")
+  //  .expect(function(res){
+  //    if(res.body.code !== 1) throw new Error("Can use half surrogate in group padid");
+  //  })
+  //  .expect('Content-Type', /json/)
+  //  .expect(200, done)
+
+  //  api.get(endPoint('createGroupPad')+"&groupID="+groupID+"&padName="+padID+"\uDCDF")
+  //  .expect(function(res){
+  //    if(res.body.code !== 1) throw new Error("Can use half surrogate in group padid");
+  //  })
+  //  .expect('Content-Type', /json/)
+  //  .expect(200, done)
+  //});
 })
 
 describe('listPads', function(){
@@ -360,5 +407,5 @@ function makeid()
   for( var i=0; i < 5; i++ ){
     text += possible.charAt(Math.floor(Math.random() * possible.length));
   }
-  return text;
+  return text+"ｙ";
 }
