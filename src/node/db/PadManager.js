@@ -234,7 +234,8 @@ exports.sanitizePadId = function(padId, callback) {
 
 exports.isValidPadId = function(padId)
 {
-  return /^(g.[a-zA-Z0-9]{16}\$)?[^$]{1,50}$/.test(padId);
+  return !/[\uD800-\uDBFF][\uDC00-\uDFFF]/.test(padId) &&
+    /^(g.[a-zA-Z0-9]{16}\$)?[^$]{1,50}$/.test(padId);
 }
 
 /**
