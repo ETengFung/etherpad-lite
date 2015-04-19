@@ -13,7 +13,7 @@ var apiVersion = 1;
 var testPadId = makeid();
 var lastEdited = "";
 var text = generateLongText();
-var ULhtml = '<!DOCTYPE html><html><body><ul class="bullet"><li>one</li><li>2</li></ul><br><ul><ul class="bullet"><li>UL2</li></ul></ul></body></html>';
+var ULhtml = '<!DOCTYPE html><html><body><ul class="bullet"><li>one</li><li>2\uD83C\uDCDFｙ\uD83C\uDCDF</li></ul><br><ul><ul class="bullet"><li>UL2</li></ul></ul></body></html>';
 
 describe('Connectivity', function(){
   it('errors if can not connect', function(done) {
@@ -208,7 +208,7 @@ describe('getHTML', function(){
 
 describe('createPad', function(){
   it('creates a new Pad with text', function(done) {
-    api.get(endPoint('createPad')+"&padID="+testPadId+"&text=testText")
+    api.get(endPoint('createPad')+"&padID="+testPadId+"&text=test\uD83C\uDCDFｙ\uD83C\uDCDFText")
     .expect(function(res){
       if(res.body.code !== 0) throw new Error("Pad Creation failed")
     })
@@ -221,7 +221,7 @@ describe('getText', function(){
   it('gets the Pad text and expect it to be testText with \n which is a line break', function(done) {
     api.get(endPoint('getText')+"&padID="+testPadId)
     .expect(function(res){
-      if(res.body.data.text !== "testText\n") throw new Error("Pad Creation with text")
+      if(res.body.data.text !== "test\uFFFD\uFFFDｙ\uFFFD\uFFFDText\n") throw new Error("gettext returns wrong content")
     }) 
     .expect('Content-Type', /json/)
     .expect(200, done)
@@ -230,7 +230,7 @@ describe('getText', function(){
 
 describe('setText', function(){
   it('creates a new Pad with text', function(done) {
-    api.get(endPoint('setText')+"&padID="+testPadId+"&text=testTextTwo")
+    api.get(endPoint('setText')+"&padID="+testPadId+"&text=testｙText\uD83C\uDCDFTwo")
     .expect(function(res){
       if(res.body.code !== 0) throw new Error("Pad setting text failed");
     })
@@ -243,7 +243,7 @@ describe('getText', function(){
   it('gets the Pad text', function(done) {
     api.get(endPoint('getText')+"&padID="+testPadId)
     .expect(function(res){
-      if(res.body.data.text !== "testTextTwo\n") throw new Error("Setting Text")
+      if(res.body.data.text !== "testｙText\uFFFD\uFFFDTwo\n") throw new Error("Setting Text")
     })
     .expect('Content-Type', /json/)
     .expect(200, done)
@@ -419,7 +419,7 @@ describe('getText', function(){
     api.get(endPoint('getText')+"&padID="+testPadId)
     .expect(function(res){
       if(res.body.code !== 0) throw new Error("Pad Get Text failed")
-      if(res.body.data.text !== text+"\n") throw new Error("Pad Text not set properly");
+      if(res.body.data.text !== text.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,"\uFFFD\uFFFD")+"\n") throw new Error("Pad Text not set properly");
     })
     .expect('Content-Type', /json/)
     .expect(200, done)
@@ -452,7 +452,7 @@ describe('getText', function(){
   it('Gets text on a pad Id', function(done) {
     api.get(endPoint('getText')+"&padID="+newPadId)
     .expect(function(res){
-      if(res.body.data.text !== text+"\n") throw new Error("Pad Get Text failed")
+      if(res.body.data.text !== text.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,"\uFFFD\uFFFD")+"\n") throw new Error("Pad text is wrong");
     })
     .expect('Content-Type', /json/)
     .expect(200, done)
@@ -474,7 +474,7 @@ describe('getText', function(){
   it('Gets text on a pad Id', function(done) {
     api.get(endPoint('getText')+"&padID="+testPadId)
     .expect(function(res){
-      if(res.body.data.text !== text+"\n") throw new Error("Pad Get Text failed")
+      if(res.body.data.text !== text.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,"\uFFFD\uFFFD")+"\n") throw new Error("Pad Text not set properly");
     })
     .expect('Content-Type', /json/)
     .expect(200, done)
@@ -494,7 +494,7 @@ describe('getLastEdited', function(){
 
 describe('setHTML', function(){
   it('Sets the HTML of a Pad attempting to pass ugly HTML', function(done) {
-    var html = "<div><b>Hello HTML</title></head></div>";
+    var html = "<div><b>Hello HTMLｙ</title></head></div>";
     api.get(endPoint('setHTML')+"&padID="+testPadId+"&html="+html)
     .expect(function(res){
 console.log(res.body.code);
@@ -546,6 +546,30 @@ describe('createPad', function(){
   });
 })
 
+describe('setHTML', function(){
+  it('Sets the HTML of a Pad (astral code points get replaced)', function(done) {
+    api.get(endPoint('setHTML')+"&padID="+testPadId+"&html="+ULhtml)
+    .expect(function(res){
+      if(res.body.code !== 0) throw new Error("List HTML cant be imported")
+    })
+    .expect('Content-Type', /json/)
+    .expect(200, done)
+  });
+})
+describe('getHTML', function(){
+  it('Gets the HTML of a Pad (astral code points get replaced) ', function(done) {
+    api.get(endPoint('getHTML')+"&padID="+testPadId)
+    .expect(function(res){
+      var ehtml = res.body.data.html.replace("<br></body>", "</body>").toLowerCase();
+      var uhtml = ULhtml.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,"&#65533;&#65533;");
+      uhtml = uhtml.replace(/ｙ/g,'&#65369;').toLowerCase();
+      if(ehtml !== uhtml) throw new Error("Imported HTML does not match served HTML")
+    })
+    .expect('Content-Type', /json/)
+    .expect(200, done)
+  });
+})
+
 
 /*
                           -> movePadForce Test
@@ -574,7 +598,7 @@ function generateLongText(){
   for( var i=0; i < 80000; i++ ){
     text += possible.charAt(Math.floor(Math.random() * possible.length));
   }
-  return text;
+  return text + "\uD83C\uDCDFｙ\uD83C\uDCDF";
 }
 
 // Need this to compare arrays (listSavedRevisions test)
