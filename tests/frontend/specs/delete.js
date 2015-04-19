@@ -47,7 +47,7 @@ describe("delete keystroke", function(){
     firstTextElement.sendkeys(string);
  
     var newLength = inner$("div").first().text().length;
-    expect(newLength).to.be(1);
+    expect(newLength).to.be(2);
     firstTextElement.sendkeys('{backspace}');
     firstTextElement.sendkeys('{backspace}');
 
