@@ -1,9 +1,13 @@
 describe("All the alphabet works n stuff", function(){
   var expectedString = "abcdefghijklmnopqrstuvwxyｙz\uD83C\uDCDF";
+  var replacedString = expectedString.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,"\uFFFD\uFFFD");
+
+  // we need to know because we refresh the pad
+  var padID = "FRONTEND_TEST_" + helper.randomString(20);
 
   //create a new pad before each test run
   beforeEach(function(cb){
-    helper.newPad(cb);
+    helper.newPad(cb, padID);
     this.timeout(60000);
   });
 
@@ -22,20 +26,15 @@ describe("All the alphabet works n stuff", function(){
     helper.waitFor(function(){
       return inner$("div").first().text() === expectedString;
     }, 2000).done(done);
+  });
 
-    // refresh and check if the chars got replaced
-    setTimeout(function(){ 
-      helper.newPad({ // get a new pad, but don't clear the cookies
-        clearCookies: false
-        , cb: function(){
-          var chrome$ = helper.padChrome$;
-          helper.waitFor(function(){
-            return inner$("div").first().text() === expectedString.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g,"\uFFFD\uFFFD");
-          }, 2000).done(done);
-          done();
-        }
-      });
-    }, 1000);
+  it("after refresh chars above U+FFFF are replaced", function(done) {
+    var inner$ = helper.padInner$; 
+    var chrome$ = helper.padChrome$; 
+
+    helper.waitFor(function(){
+      return inner$("div").first().text() === replacedString;
+    }, 2000).done(done);
   });
 
 });
