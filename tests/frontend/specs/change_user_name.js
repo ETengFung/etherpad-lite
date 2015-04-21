@@ -5,7 +5,7 @@ describe("change username value", function(){
     this.timeout(60000);
   });
 
-  it("Remembers the user name after a refresh", function(done) {
+  xit("Remembers the user name after a refresh", function(done) {
     this.timeout(60000);
     var chrome$ = helper.padChrome$;
 
@@ -38,7 +38,7 @@ describe("change username value", function(){
   });
 
 
-  it("Own user name is shown when you enter a chat", function(done) {
+  xit("Own user name is shown when you enter a chat", function(done) {
     var inner$ = helper.padInner$;
     var chrome$ = helper.padChrome$;
 
@@ -80,9 +80,9 @@ describe("change username value", function(){
     
     var $usernameInput = chrome$("#myusernameedit");
     $usernameInput.click();
+    $usernameInput.focus();
 
     $usernameInput.val('ｙ\uD835\uDC00');
-    $usernameInput.blur();
 
     //click on the chat button to make chat visible
     var $chatButton = chrome$("#chaticon");
