@@ -192,6 +192,13 @@ exports.getAuthorName = function (author, callback)
  */
 exports.setAuthorName = function (author, name, callback)
 {
+  // code points above U+FFFF
+  if(name && name.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]/))
+  {
+    console.error("author with unrepresentable character");
+    return;
+  }
+
   db.setSub("globalAuthor:" + author, ["name"], name, callback);
 }
 
