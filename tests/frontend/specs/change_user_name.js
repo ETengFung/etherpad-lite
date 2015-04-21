@@ -5,7 +5,7 @@ var padID = "FRONTEND_TEST_" + helper.randomString(20);
 
   //create a new pad before each test run
   beforeEach(function(cb){
-    helper.newPad(cb);
+    helper.newPad(cb, padID);
     this.timeout(60000);
   });
 
