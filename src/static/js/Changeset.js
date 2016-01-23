@@ -838,7 +838,11 @@ exports.textLinesMutator = function (lines) {
   }
 
   /**
+   * Indicates if curLine is already in the splice. This is necessary because the last element
+   * in curSplice is curLine when this line is currently worked on (e.g. when skipping are inserting)
    *
+   * TODO(doc) why aren't removals considered?
+   * @returns {Boolean} true if curLine is in splice
    */
   function isCurLineInSplice() {
     return (curLine - curSplice[0] < (curSplice.length - 2));
@@ -852,19 +856,24 @@ exports.textLinesMutator = function (lines) {
   }
 
   /**
+   * Incorporates current line into the splice
+   * and marks its old position to be deleted.
    *
+   * @returns {Number} the index of the added line in curSplice
    */
   function putCurLineInSplice() {
     if (!isCurLineInSplice()) {
       curSplice.push(lines_get(curSplice[0] + curSplice[1]));
       curSplice[1]++;
     }
-    return 2 + curLine - curSplice[0];
+    return 2 + curLine - curSplice[0]; // TODO should be the same as curSplice.length - 1
   }
 
   /**
+   * It will skip some newlines by putting them into the splice.
+   *
    * @param {number} L number of lines to skip
-   * @param {boolean} [includeInSplice]
+   * @param {boolean} [includeInSplice] indicates if attributes are present
    */
   function skipLines(L, includeInSplice) {
     if (L) {
@@ -872,6 +881,7 @@ exports.textLinesMutator = function (lines) {
         if (!inSplice) {
           enterSplice();
         }
+        // TODO(doc) should this count the number of characters that are skipped to check?
         for (var i = 0; i < L; i++) {
           curCol = 0;
           putCurLineInSplice();
@@ -880,6 +890,7 @@ exports.textLinesMutator = function (lines) {
       } else {
         if (inSplice) {
           if (L > 1) {
+            // TODO(doc) figure out why single lines are incorporated into splice instead of ignored
             leaveSplice();
           } else {
             putCurLineInSplice();
@@ -899,9 +910,11 @@ exports.textLinesMutator = function (lines) {
   }
 
   /**
-   * @param {number} N number of character to skip
-   * @param {number} L number of lines to skip
-   * @param includeInSplice
+   * Skip some characters. Can contain newlines.
+   *
+   * @param {Number} N number of characters to skip
+   * @param {Number} L number of newlines to skip
+   * @param {Boolean} includeInSplice indicates if attributes are present 
    */
   function skip(N, L, includeInSplice) {
     if (N) {
@@ -912,6 +925,8 @@ exports.textLinesMutator = function (lines) {
           enterSplice();
         }
         if (inSplice) {
+          // although the line is put into splice curLine is not increased, because
+          // only some chars are skipped, not the whole line
           putCurLineInSplice();
         }
         curCol += N;
@@ -921,7 +936,9 @@ exports.textLinesMutator = function (lines) {
   }
 
   /**
-   * @param {number} L number of lines to remove
+   * Remove whole lines from lines array
+   *
+   * @param {Number} L number of lines to be removed
    */
   function removeLines(L) {
     var removed = '';
@@ -931,7 +948,10 @@ exports.textLinesMutator = function (lines) {
       }
 
       /**
-       * @param {number} k
+       * Gets a string of joined lines after the end of the splice
+       *
+       * @param k {Number} number of lines
+       * @returns {String} joined lines
        */
       function nextKLinesText(k) {
         var m = curSplice[0] + curSplice[1];
@@ -963,6 +983,8 @@ exports.textLinesMutator = function (lines) {
   }
 
   /**
+   * Removes text from lines array
+   *
    * @param {number} N number of character to remove
    * @param {number} L number of lines to remove
    */
@@ -975,6 +997,8 @@ exports.textLinesMutator = function (lines) {
         if (!inSplice) {
           enterSplice();
         }
+        // although the line is put into splice, curLine is not increased, because
+        // only some chars are removed not the whole line
         var sline = putCurLineInSplice();
         removed = curSplice[sline].substring(curCol, curCol + N);
         curSplice[sline] = curSplice[sline].substring(0, curCol) + curSplice[sline].substring(curCol + N);
@@ -985,8 +1009,10 @@ exports.textLinesMutator = function (lines) {
   }
 
   /**
-   * @param {string} text
-   * @param {number} L
+   * Inserts text into lines array.
+   *
+   * @param {string} text the text to insert
+   * @param {number} L number of newlines in text
    */
   function insert(text, L) {
     if (text) {
@@ -1031,7 +1057,10 @@ exports.textLinesMutator = function (lines) {
   }
 
   /**
+   * Checks if curLine (the line we are in when curSplice is applied) is the last line
+   * in lines.
    *
+   * @return {Boolean} indicates if there are lines left
    */
   function hasMore() {
     //print(lines.length+" / "+inSplice+" / "+(curSplice.length - 2)+" / "+curSplice[1]);
@@ -1043,7 +1072,7 @@ exports.textLinesMutator = function (lines) {
   }
 
   /**
-   *
+   * Closes the splice
    */
   function close() {
     if (inSplice) {
