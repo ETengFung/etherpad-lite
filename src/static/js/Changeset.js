@@ -742,9 +742,15 @@ exports.textLinesMutator = function (lines) {
   // is not actually a newline, but for the purposes of N and L values,
   // the caller should pretend it is, and for things to work right in that case, the input
   // to insert() should be a single line with no newlines.
+
+  // The splice holds information which lines are to be deleted or changed.
+  // curSplice[0] is an index into the lines array
+  // curSplice[1] is the number of lines that will be removed from lines
+  // the other elements represent mutated (changed by ops) lines or new lines (added by ops)
   var curSplice = [0, 0];
   var inSplice = false;
-  // position in document after curSplice is applied:
+
+  // position in lines after curSplice is applied:
   var curLine = 0,
       curCol = 0;
   // invariant: if (inSplice) then (curLine is in curSplice[0] + curSplice.length - {2,3}) &&
@@ -753,7 +759,9 @@ exports.textLinesMutator = function (lines) {
   //            curCol == 0
 
   /**
-   * @param s
+   * Adds and/or removes entries at a specific offset in lines array
+   * It is called when leaving the splice
+   * @param {Array} s curSplice
    */
   function lines_applySplice(s) {
     lines.splice.apply(lines, s);
@@ -767,7 +775,8 @@ exports.textLinesMutator = function (lines) {
   }
 
   /**
-   * @param idx
+   * Get a line from lines at given index
+   * @param {Number} idx an index
    */
   function lines_get(idx) {
     if (lines.get) {
@@ -779,8 +788,9 @@ exports.textLinesMutator = function (lines) {
   // can be unimplemented if removeLines's return value not needed
 
   /**
-   * @param start
-   * @param end
+   * Return a slice from lines array
+   * @param {Number} start the start index
+   * @param {Number} end the end index
    */
   function lines_slice(start, end) {
     if (lines.slice) {
@@ -791,7 +801,7 @@ exports.textLinesMutator = function (lines) {
   }
 
   /**
-   *
+   * Return the length of lines array
    */
   function lines_length() {
     if ((typeof lines.length) == "number") {
@@ -802,11 +812,13 @@ exports.textLinesMutator = function (lines) {
   }
 
   /**
-   *
+   * Starts a new splice.
    */
   function enterSplice() {
     curSplice[0] = curLine;
     curSplice[1] = 0;
+    //TODO(doc) when is this the case?
+    //          check all enterSplice calls and changes to curCol
     if (curCol > 0) {
       putCurLineInSplice();
     }
@@ -814,7 +826,9 @@ exports.textLinesMutator = function (lines) {
   }
 
   /**
-   *
+   * Changes the lines array according to the values in curSplice
+   * and resets curSplice.
+   * This is called via close or TODO(doc)
    */
   function leaveSplice() {
     lines_applySplice(curSplice);
