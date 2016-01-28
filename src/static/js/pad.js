@@ -521,6 +521,11 @@ var pad = {
     pad.initTime = +(new Date());
     pad.padOptions = clientVars.initialOptions;
 
+    if ((!browser.msie) && (!(browser.firefox && browser.version.indexOf("1.8.") == 0)))
+    {
+      document.domain = document.domain; // for comet
+    }
+
     // for IE
     if (browser.msie)
     {
