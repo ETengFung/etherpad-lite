@@ -250,6 +250,7 @@ function loadBroadcastJS(socket, sendSocketMsg, fireWhenAllScriptsAreLoaded, Bro
     try
     {
       // must mutate attribution lines before text lines
+      //TODO(coverage) mutateAttributionLines calls textLinesMutator
       Changeset.mutateAttributionLines(changeset, padContents.alines, padContents.apool);
     }
     catch (e)
@@ -257,6 +258,7 @@ function loadBroadcastJS(socket, sendSocketMsg, fireWhenAllScriptsAreLoaded, Bro
       debugLog(e);
     }
 
+    //TODO(coverage) mutateTextLines calls textLinesMutator
     Changeset.mutateTextLines(changeset, padContents);
     padContents.currentRevision = revision;
     padContents.currentTime += timeDelta * 1000;

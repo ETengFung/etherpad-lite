@@ -2243,6 +2243,7 @@ function Ace2Inner(){
     })(changes);
 
     //rep.alltext = Changeset.applyToText(changes, rep.alltext);
+    //TODO(coverage) mutateAttributionLines calls textLinesMutator
     Changeset.mutateAttributionLines(changes, rep.alines, rep.apool);
 
     if (changesetTracker.isTracking())
