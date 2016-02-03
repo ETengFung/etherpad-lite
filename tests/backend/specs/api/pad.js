@@ -496,6 +496,7 @@ describe('appendText', function(){
   });
 });
 
+//FIXME find out why "\nhello" changed to "hello\n", intended?
 describe('getText', function(){
   it('Gets text on a pad Id', function(done) {
     api.get(endPoint('getText')+"&padID="+testPadId)
