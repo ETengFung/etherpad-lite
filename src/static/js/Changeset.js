@@ -1617,13 +1617,10 @@ exports.makeAText = function (text, attribs) {
  * @param pool {AttribPool} Attribute Pool to add to
  */
 exports.applyToAText = function (cs, atext, pool) {
-  if (atext.text) {
-    return {
-      text: exports.applyToText(cs, atext.text),
-      attribs: exports.applyToAttribution(cs, atext.attribs, pool)
-    }
-  }
-  else exports.error("atext is null");
+  return {
+    text: exports.applyToText(cs, atext.text),
+    attribs: exports.applyToAttribution(cs, atext.attribs, pool)
+  };
 };
 
 /**
