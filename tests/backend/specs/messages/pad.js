@@ -58,6 +58,7 @@ describe('pad session init', function(){
     .expect(function(res){
       for (var i = 0; i < res.header['set-cookie'].length; i++){
         var m = res.header['set-cookie'][i].match(/express_sid=([^;]+)/);
+        if (m) break;
       }
       if(m){
         cookie = m[0];
