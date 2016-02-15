@@ -69,6 +69,15 @@ describe('Export txt',function(){
     })
     .expect(400, done)
   });
+  it('should work if revision is undefined',function(done){
+    eplserver.get('/p/'+padid+'/export/txt')
+    .expect(function(res){
+      if(!res.text || res.text.length === 0){
+        throw new Error("empty default text or undefined text?")
+      }
+    })
+    .expect(200, done)
+  });
 });
 //some as above :-)
 describe('Export html',function(){
@@ -130,6 +139,15 @@ describe('Export html',function(){
       if(res.text !== '') throw new Error("res is not empty")
     })
     .expect(400, done)
+  });
+  it('should work if revision is undefined',function(done){
+    eplserver.get('/p/'+padid+'/export/html')
+    .expect(function(res){
+      if(!res.text || res.text.length === 0){
+        throw new Error("empty default text or undefined text?")
+      }
+    })
+    .expect(200, done)
   });
 });
 
