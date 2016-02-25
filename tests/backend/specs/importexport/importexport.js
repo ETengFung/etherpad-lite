@@ -17,7 +17,7 @@ describe('Import/Export',function(){
   var padid = makeid();
   it("should import a text document",function(done){
     eplserver.post('/p/'+padid+'/import')
-    .attach('file','tests/backend/specs/importexport/assets/normal_text.txt')
+    .attach('file','tests/backend/specs/importexport/fixtures/normal_text.txt')
     .field('filename','normal_text.txt')
     .send()
     .expect(function(res){
@@ -26,7 +26,7 @@ describe('Import/Export',function(){
     .expect(200, done)
   });
   it('should export a text document',function(done){
-    var testresult = fs.readFileSync('tests/backend/specs/importexport/assets/normal_text.txt').toString();
+    var testresult = fs.readFileSync('tests/backend/specs/importexport/fixtures/normal_text.txt').toString();
     eplserver.get('/p/'+padid+'/export/txt')
     .expect(function(res){
       if(res.text !== testresult) throw new Error("Response from Export is wrong: "+res.text)
@@ -35,7 +35,7 @@ describe('Import/Export',function(){
   });
   it("should import a text document with newlines",function(done){
     eplserver.post('/p/'+padid+'/import')
-    .attach('file','tests/backend/specs/importexport/assets/text_with_newlines.txt')
+    .attach('file','tests/backend/specs/importexport/fixtures/text_with_newlines.txt')
     .field('filename','text_with_newlines.txt')
     .send()
     .expect(function(res){
@@ -44,7 +44,7 @@ describe('Import/Export',function(){
     .expect(200, done)
   });
   it('should export a text document with newlines (txt)',function(done){
-    var testresult = fs.readFileSync('tests/backend/specs/importexport/assets/text_with_newlines.txt').toString();
+    var testresult = fs.readFileSync('tests/backend/specs/importexport/fixtures/text_with_newlines.txt').toString();
     eplserver.get('/p/'+padid+'/export/txt')
     .expect(function(res){
       if(res.text !== testresult) throw new Error("Response from Export is wrong: "+res.text)
@@ -52,7 +52,7 @@ describe('Import/Export',function(){
     .expect(200, done)
   });
   it('should export a text document with newlines (html)',function(done){
-    var testresult = fs.readFileSync('tests/backend/specs/importexport/assets/text_with_newlines.txt.html').toString().slice(0,-1);
+    var testresult = fs.readFileSync('tests/backend/specs/importexport/fixtures/text_with_newlines.txt.html').toString().slice(0,-1);
     eplserver.get('/p/'+padid+'/export/html')
     .expect(function(res){
       if(extractHtmlBody(res.text) !== testresult) throw new Error("Response from Export is wrong: "+extractHtmlBody(res.text))
@@ -63,7 +63,7 @@ describe('Import/Export',function(){
   var padid = makeid();
   it("should import a text document with newlines",function(done){
     eplserver.post('/p/'+padid+'/import')
-    .attach('file','tests/backend/specs/importexport/assets/text_with_newlines.html')
+    .attach('file','tests/backend/specs/importexport/fixtures/text_with_newlines.html')
     .field('filename','text_with_newlines.html')
     .send()
     .expect(function(res){
@@ -89,7 +89,7 @@ describe('Import/Export',function(){
   });
   it("should import a document with attributes",function(done){
     eplserver.post('/p/'+padid+'/import')
-    .attach('file','tests/backend/specs/importexport/assets/text_with_attributes.html')
+    .attach('file','tests/backend/specs/importexport/fixtures/text_with_attributes.html')
     .field('filename','text_with_attributes.html')
     .send()
     .expect(function(res){
@@ -117,7 +117,7 @@ describe('Import/Export',function(){
   var padid = makeid();
   it("should import a document with bullets",function(done){
     eplserver.post('/p/'+padid+'/import')
-    .attach('file','tests/backend/specs/importexport/assets/text_with_bullets.html')
+    .attach('file','tests/backend/specs/importexport/fixtures/text_with_bullets.html')
     .field('filename','text_with_bullets.html')
     .send()
     .expect(function(res){
@@ -143,7 +143,7 @@ describe('Import/Export',function(){
   });
   it("should import a document with bullets and newlines",function(done){
     eplserver.post('/p/'+padid+'/import')
-    .attach('file','tests/backend/specs/importexport/assets/text_with_bullets_and_newlines.html')
+    .attach('file','tests/backend/specs/importexport/fixtures/text_with_bullets_and_newlines.html')
     .field('filename','text_with_bullets_and_newlines.html')
     .send()
     .expect(function(res){
@@ -169,7 +169,7 @@ describe('Import/Export',function(){
   });
   it("should import a document with bullets and newlines and attributes",function(done){
     eplserver.post('/p/'+padid+'/import')
-    .attach('file','tests/backend/specs/importexport/assets/text_with_bullets_and_newlines_and_attributes.html')
+    .attach('file','tests/backend/specs/importexport/fixtures/text_with_bullets_and_newlines_and_attributes.html')
     .field('filename','text_with_bullets_and_newlines_and_attributes.html')
     .send()
     .expect(function(res){
@@ -197,7 +197,7 @@ describe('Import/Export',function(){
   var padid = makeid();
   it("should import a document with nested bullets",function(done){
     eplserver.post('/p/'+padid+'/import')
-    .attach('file','tests/backend/specs/importexport/assets/text_with_nested_bullets.html')
+    .attach('file','tests/backend/specs/importexport/fixtures/text_with_nested_bullets.html')
     .field('filename','text_with_nested_bullets.html')
     .send()
     .expect(function(res){
@@ -223,7 +223,7 @@ describe('Import/Export',function(){
   });
   it("should import a document with 8 level bullets",function(done){
     eplserver.post('/p/'+padid+'/import')
-    .attach('file','tests/backend/specs/importexport/assets/text_with_8level_bullets.html')
+    .attach('file','tests/backend/specs/importexport/fixtures/text_with_8level_bullets.html')
     .field('filename','text_with_8level_bullets.html')
     .send()
     .expect(function(res){
@@ -256,7 +256,7 @@ describe('Import/Export',function(){
   });
   xit("should import a document with ordered lists",function(done){
     eplserver.post('/p/'+padid+'/import')
-    .attach('file','tests/backend/specs/importexport/assets/text_with_ordered_lists.html')
+    .attach('file','tests/backend/specs/importexport/fixtures/text_with_ordered_lists.html')
     .field('filename','text_with_ordered_lists.html')
     .send()
     .expect(function(res){
@@ -283,7 +283,7 @@ describe('Import/Export',function(){
   });
   xit("should import a document with ordered lists and newlines",function(done){
     eplserver.post('/p/'+padid+'/import')
-    .attach('file','tests/backend/specs/importexport/assets/text_with_ordered_lists_and_newlines.html')
+    .attach('file','tests/backend/specs/importexport/fixtures/text_with_ordered_lists_and_newlines.html')
     .field('filename','text_with_ordered_lists_and_newlines.html')
     .send()
     .expect(function(res){
