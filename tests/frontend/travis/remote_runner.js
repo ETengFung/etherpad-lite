@@ -49,7 +49,7 @@ var sauceTestWorker = async.queue(function (testSettings, callback) {
     //timeout for the case the test hangs
     var timeout = setTimeout(function(){
       stopSauce(false);
-    }, 60000 * 10);
+    }, 60000);
 
     var knownConsoleText = "";
     var getStatusInterval = setInterval(function(){
