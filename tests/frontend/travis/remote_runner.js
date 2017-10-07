@@ -66,43 +66,13 @@ var sauceTestWorker = async.queue(function (testSettings, callback) {
       });
     }, 5000);
   });
-}, 5); //run 5 tests in parrallel
+}, 3); //run 3 tests in parrallel
 
 // Firefox 
 sauceTestWorker.push({
     'platform'       : 'Linux'
   , 'browserName'    : 'firefox'
-  , 'version'        : ''
-});
-
-// Chrome
-sauceTestWorker.push({
-    'platform'       : 'Linux'
-  , 'browserName'    : 'googlechrome'
-  , 'version'        : ''
-});
-
-/*
-// IE 8
-sauceTestWorker.push({
-    'platform'       : 'Windows 2003'
-  , 'browserName'    : 'iexplore'
-  , 'version'        : '8'
-});
-*/
-
-// IE 9
-sauceTestWorker.push({
-    'platform'       : 'Windows XP'
-  , 'browserName'    : 'iexplore'
-  , 'version'        : '9'
-});
-
-// IE 10
-sauceTestWorker.push({
-    'platform'       : 'Windows 2012'
-  , 'browserName'    : 'iexplore'
-  , 'version'        : '10'
+  , 'version'        : 'latest'
 });
 
 sauceTestWorker.drain = function() {
