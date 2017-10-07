@@ -66,7 +66,7 @@ var sauceTestWorker = async.queue(function (testSettings, callback) {
       });
     }, 5000);
   });
-}, 3); //run 3 tests in parrallel
+}, 1); //run 1 tests in parrallel
 
 // Firefox 
 sauceTestWorker.push({
