@@ -4,8 +4,7 @@
 cd `dirname $0`
 
 #start Etherpad
-../../../bin/run.sh > /dev/null &
-sleep 10
+../../../bin/run.sh > /tmp/epl-run.log &
 
 #start remote runner
 node remote_runner.js
