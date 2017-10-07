@@ -13,8 +13,6 @@ install:
 - npm install ep_test_line_attrib
 script:
 - tests/frontend/travis/runner.sh
-jdk:
-- oraclejdk6
 addons:
   sauce_connect:
     username: webzwo0i
