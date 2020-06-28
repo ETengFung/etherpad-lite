@@ -21,8 +21,7 @@ $(function(){
   }
 
   function CustomRunner(runner) {
-    var self = this
-      , stats = this.stats = { suites: 0, tests: 0, passes: 0, pending: 0, failures: 0 }
+    let stats = this.stats = { suites: 0, tests: 0, passes: 0, pending: 0, failures: 0 }
       , failures = this.failures = [];
 
     if (!runner) return;
@@ -50,9 +49,9 @@ $(function(){
     });
 
     // Scroll down test display after each test
-    mocha = $('#mocha')[0];
+    let mochaEl = $('#mocha')[0];
     runner.on('test', function(){
-      mocha.scrollTop = mocha.scrollHeight;
+      mochaEl.scrollTop = mochaEl.scrollHeight;
     });
 
     var killTimeout;
