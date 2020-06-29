@@ -8,13 +8,6 @@ services:
 
 cache: false
 
-install:
-  - "bin/installDeps.sh"
-  - "export GIT_HASH=$(git rev-parse --verify --short HEAD)"
-
-script:
-  - "tests/frontend/travis/runner.sh"
-
 env:
   global:
     - secure: "WnTHjwEk7ZijPMUpAY9Cz7WzGVTdTsYjTx4uDbyVeV7u3z7/EgnFapYLv5g/CSmErZ1RZmtcqeFEbtnxvMis4+RIbvHi4TepJSKVbl1v4G00sOqYu8BuWWE7fhq6Lf6cSARMrGYNMz7kZvT1RjgzYqPhkcSZz0wsQ0eZ/aHDJtVjvLsvLUyQ2WfWKbe6AAc7gczPT/465I6EVQJxBU6jALZTcPQPVhsFrrmQUcoEhLEffqg0njF1M7URanFte+q2VLiCIKsLFRTvzwElbi8qgcoGlwz+KjR7R6iGJ5UcpH32hCflGAmsmxWFP8ljSISp/0PyNfggfEMEuMC7AwK2+AjmK/1pB36kFyfmopD/fkekYKWCr4W62sa8Yxbkbee1Jwm4HXE0Ar+GbIB4Vsy7eDKCEfi26NtohG3zh+CJLNjGye8HuW/7dfjK+1WD8oO/15HTuAvtZzaQ29rc9zybv9AsfVY9nJ4q/U7byKTmFJ0AmAeafl5JBoI0C0z5Oy6C3U/8wfb+Dg9+RufUyDNqfuYxjSTqzdJwkHweLBYfZyr+ONn8UAh5QUvljwUSUgEEVQxxELN5H/SbrtjzXfAKbrcXe58VtExeWSQXfpYU0PbkPFe1MxOgghu3H03wa+XVznmpWJVEUDq75g4xzN8X/l3QzraqGxHHa0LsiZhtkik="
