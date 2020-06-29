@@ -1,7 +1,9 @@
 language: node_js
 
 node_js:
-  - "lts/*"
+  - 'v10'
+  - 'v12'
+  - 'v14'
 
 services:
   - docker
@@ -17,8 +19,8 @@ script:
 
 env:
   global:
-    - secure: "WMGxFkOeTTlhWB+ChMucRtIqVmMbwzYdNHuHQjKCcj8HBEPdZLfCuK/kf4rG\nVLcLQiIsyllqzNhBGVHG1nyqWr0/LTm8JRqSCDDVIhpyzp9KpCJQQJG2Uwjk\n6/HIJJh/wbxsEdLNV2crYU/EiVO3A4Bq0YTHUlbhUqG3mSCr5Ec="
-    - secure: "gejXUAHYscbR6Bodw35XexpToqWkv2ifeECsbeEmjaLkYzXmUUNWJGknKSu7\nEUsSfQV8w+hxApr1Z+jNqk9aX3K1I4btL3cwk2trnNI8XRAvu1c1Iv60eerI\nkE82Rsd5lwUaMEh+/HoL8ztFCZamVndoNgX7HWp5J/NRZZMmh4g="
+    - secure: "bl1joSAW93ohJ9MvxauQT99T9m01wEldU+mwDHzGjTqwCuXLrY7+dlTGvwfxHMgnqgsw9VYxJ6BEmBT94IEjD6HSrCuyLFkNbyL6Hw29LXmnU5ZCYt/pz6N4vFiEimT7MyanHNTwmPqgyXkVp+UWKRZqVI1AtVK4Q19QGx/1jkQZZN6qGoifBGmg2v0NWlkw1MD9dkck65IWogdETXz9AwwcgMQ+wPpjhN0I32wNOR3RgiZY0Vm17KFzGVBqXXuaQb6XAMwNk1Mv9JcjSOBAtaR/ev1+uqvxmGTNacELpbvTfAHWd1m7UEetrkmTNqdEuSl//04oyypnKQU0vaqC2hiTb0aCc9YBj5xUGJ8Rsqvwlr6/wbz8VuVCFBVoQoHmldINWh7+5t6TdScrpGHb6nR3/s2GagO4T7i1TDSNcXgpHc0ZMK58hJoI6i+VZGbzOcR3ClJR75lF+QJB1kH0jmYPGGCzF1eTFtsAFuMwYSaRPl7iJZzXUEnwmTNSAVI3qgo+YnH8fWMxmzfuUhQqvcFClj6LOHIo8VtRA4mGnRdWFsqFzQKbWj2elgrSV2CQcfmiQhKQRzjc5lwk2cX5UADL519v5mrUof/8lipIq/TKz7HFhuhvjBTbLIuiLVnfg/lQJQNSaIqnQXLiIhCYLa6bXBAnZWPnOuBOGeqOdpo="
+		- secure: "ZesfRbi/dPcPlHe6BtJ+0vDNcjC3lPCLhEaBYhhoTPuRPPxANtG5GsbbYbafq6CiD07FcCcyxllETnkcpmXo0SHmz+vxgmJoacG4RfrzXX04j6VsfEzH5XSs3IYu1c7UrdyIFqFiDeWF3fb3EqzWlbqLnlR/ZvapL8lF7YhKiX0Yd5bkbcKrKnih/wbshXCai2dAdoR69vEFGlI9RZbkQwVRxXPWvOuW2M6laqtMWl6iiZJz/fAQI97mZRNrCaimsuvcj14nBj/pFtflK5E9fR1IeazgiPlrXvrjUuD0PVsT/3sH9c7FuTep5nDOd7fhXIwCBMg/PhDLFfAfq0Ux7LpwULUuBr8ogn91pgdnuCkPVysvLJTE9yVVfWMSlKuNc7iDGDwMp1Q3H3kspyPBUQUeAlfJeRKDPhKmDDHfyzun/P3w1G3aI5kjkradXykY2LldHQeai58aWhpIZSK789qLBlC88+F+Y1Q3/04AoLIoY1Thw7jHrOWvmYFogWH51LjtdbKOhwLbKfjVVrjA8BQmvEgopJsJkvj1Vg4EFw/vn7VnoHQV5yB6O18fRBukflIb/m3dc1bxC9mNGZX7DtXirS3DmwUDvzwyz6AIFcu4VlGr7UEytDthFq07khBlhM8JSgI5otWFVR0tEkzxzUHGl+QTAqHG5BssLRznmig="
 
 jobs:
   include:
@@ -54,8 +56,3 @@ jobs:
         - "sed 's/\"loadTest\": false,/\"loadTest\": true,/g' settings.json.template > settings.json"
       script:
         - "tests/frontend/travis/runnerLoadTest.sh"
-
-notifications:
-  irc:
-    channels:
-      - "irc.freenode.org#etherpad-lite-dev"
