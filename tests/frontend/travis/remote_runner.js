@@ -74,32 +74,23 @@ var sauceTestWorker = async.queue(function (testSettings, callback) {
 
 // 1) Firefox on Linux
 sauceTestWorker.push({
-    'platformName'   : 'Linux'
+    'platform'       : 'Linux'
   , 'browserName'    : 'firefox'
-  , 'browserVersion' : 'latest'
-  , "sauce:options": {
-      extendedDebugging : true
-	}
+  , 'version'        : 'latest'
 });
 
 // 2) Chrome on Linux
 sauceTestWorker.push({
-    'platformName'   : 'Linux'
+    'platform'       : 'Linux'
   , 'browserName'    : 'googlechrome'
-  , 'browserVersion' : 'latest'
-  , "sauce:options": {
-      extendedDebugging : true
-	}
+  , 'version'        : 'latest'
 });
 
 // 3) Safari on OSX 10.15
 sauceTestWorker.push({
-    'platformName'   : 'OS X 10.15'
+    'platform'       : 'OS X 10.15'
   , 'browserName'    : 'safari'
-  , 'browserVersion' : 'latest'
-  , "sauce:options": {
-      extendedDebugging : true
-	}
+  , 'version'        : 'latest'
 });
 // IE 10 doesn't appear to be working anyway
 /*
@@ -112,12 +103,9 @@ sauceTestWorker.push({
 */
 // 5) Edge on Win 10
 sauceTestWorker.push({
-    'platformName'       : 'Windows 10'
-  , 'browserName'        : 'microsoftedge'
-  , 'browserVersion'     : 'latest'
-  , "sauce:options": {
-      extendedDebugging : true
-	}
+    'platform'       : 'Windows 10'
+  , 'browserName'    : 'microsoftedge'
+  , 'version'        : 'latest'
 });
 
 sauceTestWorker.drain = function() {
