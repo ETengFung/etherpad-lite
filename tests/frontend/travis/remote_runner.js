@@ -4,7 +4,7 @@ var async = require(srcFolder + "async");
 
 var config = {
     host: "ondemand.us-west-1.saucelabs.com"
-  , port: 80
+  , port: 443
   , username: process.env.SAUCE_USER
   , accessKey: process.env.SAUCE_ACCESS_KEY
 }
