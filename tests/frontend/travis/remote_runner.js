@@ -19,6 +19,8 @@ var sauceTestWorker = async.queue(function (testSettings, callback) {
   testSettings["public"] = true;
   testSettings["build"] = process.env.GIT_HASH;
 
+  console.log(browser)
+
   // we wait 10 seconds here with the hope it was enough time for the minified files to be built etc.
   setTimeout(function(){
     browser.init(testSettings).get("http://localhost:9001/tests/frontend/", function(){
