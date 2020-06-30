@@ -7,13 +7,12 @@ var config = {
   , port: 4444
   , username: process.env.SAUCE_USER
   , accessKey: process.env.SAUCE_ACCESS_KEY
-  , path: "/wd/hub"
 }
 
 var allTestsPassed = true;
 
 var sauceTestWorker = async.queue(function (testSettings, callback) {
-  var browser = wd.promiseChainRemote(config);
+  var browser = wd.promiseChainRemote(config.host, config.port, config.username, config.accessKey);
   var name = process.env.GIT_HASH + " - " + testSettings.browserName + " " + testSettings.version + ", " + testSettings.platform;
   testSettings.name = name;
   testSettings["public"] = true;
