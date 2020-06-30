@@ -25,7 +25,7 @@ jobs:
     - name: "Test the Frontend"
       install:
         - "sudo apt install -y socat"
-        - "socat TCP-LISTEN:4444,fork,reuseaddr ssl:ondemand.us-west-1.saucelabs.com:443"
+        - "socat TCP-LISTEN:4444,fork,reuseaddr ssl:ondemand.us-west-1.saucelabs.com:443&"
         - "bin/installDeps.sh"
         - "export GIT_HASH=$(git rev-parse --verify --short HEAD)"
       script:
