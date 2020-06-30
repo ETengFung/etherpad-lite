@@ -3,16 +3,17 @@ var wd = require(srcFolder + "wd");
 var async = require(srcFolder + "async");
 
 var config = {
-    host: "ondemand.us-west-1.saucelabs.com"
-  , port: 443
+    host: "localhost"
+  , port: 4444
   , username: process.env.SAUCE_USER
   , accessKey: process.env.SAUCE_ACCESS_KEY
+  , path: "/wd/hub"
 }
 
 var allTestsPassed = true;
 
 var sauceTestWorker = async.queue(function (testSettings, callback) {
-  var browser = wd.promiseChainRemote(config.host, config.port, config.username, config.accessKey);
+  var browser = wd.promiseChainRemote(config);
   var name = process.env.GIT_HASH + " - " + testSettings.browserName + " " + testSettings.version + ", " + testSettings.platform;
   testSettings.name = name;
   testSettings["public"] = true;
