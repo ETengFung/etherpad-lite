@@ -23,11 +23,13 @@ var sauceTestWorker = async.queue(function (testSettings, callback) {
   // we wait 10 seconds here with the hope it was enough time for the minified files to be built etc.
   setTimeout(function(){
     browser.init(testSettings).get("http://localhost:9001/tests/frontend/", function(){
+      console.log("init")
       var url = "https://saucelabs.com/jobs/" + browser.sessionID;
       console.log("Remote sauce test '" + name + "' started! " + url);
 
       //tear down the test excecution
       var stopSauce = function(success){
+        console.log("teardown")
         getStatusInterval && clearInterval(getStatusInterval);
         clearTimeout(timeout);
 
@@ -75,25 +77,25 @@ var sauceTestWorker = async.queue(function (testSettings, callback) {
 }, 1); //run 1 test in parrallel
 
 // 1) Firefox on Linux
-sauceTestWorker.push({
-    'platform'       : 'Linux'
-  , 'browserName'    : 'firefox'
-  , 'version'        : 'latest'
-});
+//sauceTestWorker.push({
+//    'platform'       : 'Linux'
+//  , 'browserName'    : 'firefox'
+//  , 'version'        : 'latest'
+//});
 
 // 2) Chrome on Linux
 sauceTestWorker.push({
-    'platform'       : 'Linux'
-  , 'browserName'    : 'googlechrome'
-  , 'version'        : 'latest'
+    'platformName'       : 'Linux'
+  , 'browserName'    : 'chrome'
+  , 'browserVersion'        : 'latest'
 });
-
-// 3) Safari on OSX 10.15
-sauceTestWorker.push({
-    'platform'       : 'OS X 10.15'
-  , 'browserName'    : 'safari'
-  , 'version'        : 'latest'
-});
+//
+//// 3) Safari on OSX 10.15
+//sauceTestWorker.push({
+//    'platform'       : 'OS X 10.15'
+//  , 'browserName'    : 'safari'
+//  , 'version'        : 'latest'
+//});
 // IE 10 doesn't appear to be working anyway
 /*
 // 4) IE 10 on Win 8
@@ -104,14 +106,15 @@ sauceTestWorker.push({
 });
 */
 // 5) Edge on Win 10
-sauceTestWorker.push({
-    'platform'       : 'Windows 10'
-  , 'browserName'    : 'microsoftedge'
-  , 'version'        : 'latest'
-});
+//sauceTestWorker.push({
+//    'platform'       : 'Windows 10'
+//  , 'browserName'    : 'microsoftedge'
+//  , 'version'        : 'latest'
+//});
 
 sauceTestWorker.drain = function() {
   setTimeout(function(){
+    console.log("in drain")
     process.exit(allTestsPassed ? 0 : 1);
   }, 3000);
 }
