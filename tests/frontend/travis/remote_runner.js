@@ -21,7 +21,6 @@ var sauceTestWorker = async.queue(function (testSettings, callback) {
   console.log(browser)
 
   // we wait 10 seconds here with the hope it was enough time for the minified files to be built etc.
-  setTimeout(function(){
     browser.init(testSettings).get("http://localhost:9001/tests/frontend/", function(){
       console.log("init")
       var url = "https://saucelabs.com/jobs/" + browser.sessionID;
@@ -72,7 +71,6 @@ var sauceTestWorker = async.queue(function (testSettings, callback) {
       }, 5000);
     });
 
-  }, 10000);
 
 }, 1); //run 1 test in parrallel
 
