@@ -97,7 +97,7 @@ exports.handleConnect = function(client)
 
 /**
  * Kicks all sessions from a pad
- * @param client the new client
+ * @param {string} padID the new client
  */
 exports.kickSessionsFromPad = function(padID)
 {

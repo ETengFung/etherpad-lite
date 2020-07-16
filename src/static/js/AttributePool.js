@@ -29,8 +29,11 @@
 */
 
 var AttributePool = function () {
+  /** @name AttributePool#numToAttrib */
   this.numToAttrib = {}; // e.g. {0: ['foo','bar']}
+  /** @name AttributePool#attribToNum */
   this.attribToNum = {}; // e.g. {'foo,bar': 0}
+  /** @name AttributePool#nextNum */
   this.nextNum = 0;
 };
 

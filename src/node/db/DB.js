@@ -34,7 +34,6 @@ exports.db = null;
 
 /**
  * Initalizes the database with the settings provided by the settings module
- * @param {Function} callback
  */
 exports.init = function() {
   // initalize the database async

@@ -62,7 +62,7 @@ exports.getAuthor4Token = async function(token)
 
 /**
  * Returns the AuthorID for a mapper.
- * @param {String} token The mapper
+ * @param {String} authorMapper The mapper
  * @param {String} name The name of the author (optional)
  */
 exports.createAuthorIfNotExistsFor = async function(authorMapper, name)
@@ -191,7 +191,7 @@ exports.setAuthorName = function(author, name)
 
 /**
  * Returns an array of all pads this author contributed to
- * @param {String} author The id of the author
+ * @param {String} authorID The id of the author
  */
 exports.listPadsOfAuthor = async function(authorID)
 {
@@ -216,7 +216,7 @@ exports.listPadsOfAuthor = async function(authorID)
 
 /**
  * Adds a new pad to the list of contributions
- * @param {String} author The id of the author
+ * @param {String} authorID The id of the author
  * @param {String} padID The id of the pad the author contributes to
  */
 exports.addPad = async function(authorID, padID)
@@ -244,7 +244,7 @@ exports.addPad = async function(authorID, padID)
 
 /**
  * Removes a pad from the list of contributions
- * @param {String} author The id of the author
+ * @param {String} authorID The id of the author
  * @param {String} padID The id of the pad the author contributes to
  */
 exports.removePad = async function(authorID, padID)

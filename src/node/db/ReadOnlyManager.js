@@ -52,7 +52,7 @@ exports.getPadId = function(readOnlyId)
 
 /**
  * returns the padId and readonlyPadId in an object for any id
- * @param {String} padIdOrReadonlyPadId read only id or real pad id
+ * @param {String} id read only id or real pad id
  */
 exports.getIds = async function(id) {
   let readonly = (id.indexOf("r.") === 0);

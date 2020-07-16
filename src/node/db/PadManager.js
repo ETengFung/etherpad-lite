@@ -106,8 +106,8 @@ let padList = {
 
 /**
  * Returns a Pad Object with the callback
- * @param id A String with the id of the pad
- * @param {Function} callback
+ * @param {string} id A String with the id of the pad
+ * @param {string} [text]
  */
 exports.getPad = async function(id, text)
 {
