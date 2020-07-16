@@ -731,7 +731,7 @@ exports.stringAssembler = function () {
  * It is used for applying Changesets on arrays of lines
  * Note from prev docs: "lines" need not be an array as long as it supports certain calls (lines_foo inside).
  *
- * @param lines
+ * @param {Array.<string>} lines
  */
 exports.textLinesMutator = function (lines) {
   // Mutates lines, an array of strings, in place.
