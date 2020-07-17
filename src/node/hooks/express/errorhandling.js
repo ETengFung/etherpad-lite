@@ -1,4 +1,5 @@
 var os = require("os");
+/** @type {Database} */
 var db = require('../../db/DB');
 var stats = require('ep_etherpad-lite/node/stats')
 

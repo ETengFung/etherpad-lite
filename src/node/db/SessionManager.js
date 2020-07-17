@@ -20,6 +20,7 @@
 
 var customError = require("../utils/customError");
 var randomString = require("../utils/randomstring");
+/** @type {Database} */
 var db = require("./DB");
 var groupManager = require("./GroupManager");
 var authorManager = require("./AuthorManager");

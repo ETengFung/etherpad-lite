@@ -18,6 +18,7 @@
  * limitations under the License.
  */
 
+/** @type {Database} */
 var db = require("./DB");
 var customError = require("../utils/customError");
 var randomString = require('ep_etherpad-lite/static/js/pad_utils').randomString;

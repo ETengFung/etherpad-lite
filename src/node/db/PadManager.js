@@ -20,6 +20,7 @@
 
 var customError = require("../utils/customError");
 var Pad = require("../db/Pad").Pad;
+/** @type {Database} */
 var db = require("./DB");
 
 /**

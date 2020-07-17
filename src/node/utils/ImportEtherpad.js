@@ -15,6 +15,7 @@
  */
 
 var log4js = require('log4js');
+/** @type {Database} */
 const db = require("../db/DB");
 
 exports.setPadRaw = function(padId, records)

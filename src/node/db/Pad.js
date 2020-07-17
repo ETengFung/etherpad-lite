@@ -5,6 +5,7 @@
 
 var Changeset = require("ep_etherpad-lite/static/js/Changeset");
 var AttributePool = require("ep_etherpad-lite/static/js/AttributePool");
+/** @type {Database} */
 var db = require("./DB");
 var settings = require('../utils/Settings');
 var authorManager = require("./AuthorManager");

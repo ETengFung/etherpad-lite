@@ -18,7 +18,7 @@
  * limitations under the License.
  */
 
-
+/** @type {Database} */
 var db = require("./DB");
 var randomString = require("../utils/randomstring");
 

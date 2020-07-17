@@ -25,6 +25,19 @@ var log4js = require('log4js');
 const util = require("util");
 
 // set database settings
+      /**
+       * @typedef Database
+       * @type {object}
+       * @property {function} init
+       * @property {function} get
+       * @property {function} getSub
+       * @property {function} set
+       * @property {function} setSub
+       * @property {function} remove
+       * @property {function} findKeys
+       * @property {function} doShutdown
+       */
+/** @type {Database} db */
 let db = new ueberDB.database(settings.dbType, settings.dbSettings, null, log4js.getLogger("ueberDB"));
 
 /**
