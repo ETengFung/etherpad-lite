@@ -1708,8 +1708,8 @@ exports.identity = function (N) {
  * @param {number} spliceStart where splicing starts
  * @param {number} numRemoved number of characters to be removed
  * @param {string} newText string to be inserted
- * @param {string} optNewTextAPairs new pairs to be inserted
- * @param {AttribPool} pool Attribution Pool
+ * @param {string} [optNewTextAPairs] new pairs to be inserted
+ * @param {AttribPool} [pool] Attribution Pool
  */
 exports.makeSplice = function (oldFullText, spliceStart, numRemoved, newText, optNewTextAPairs, pool) {
   var oldLen = oldFullText.length;
@@ -1933,7 +1933,7 @@ exports.mapAttribNumbers = function (cs, func) {
  * Create a Changeset going from Identity to a certain state
  *
  * @param {string} text text of the final change
- * @param {string} attribs optional, operations which insert
+ * @param {string} [attribs] optional, operations which insert
  * the text and also puts the right attributes
  */
 exports.makeAText = function (text, attribs) {
@@ -2107,8 +2107,8 @@ exports.builder = function (oldLen) {
     },
     /**
      * @param {string} text
-     * @param {ArrayLike} attribs
-     * @param {AttribPool} pool
+     * @param {ArrayLike} [attribs]
+     * @param {AttribPool} [pool]
      */
     keepText: function (text, attribs, pool) {
       assem.appendOpWithText('=', text, attribs, pool);
@@ -2116,8 +2116,8 @@ exports.builder = function (oldLen) {
     },
     /**
      * @param {string} text
-     * @param {ArrayLike} attribs
-     * @param {AttribPool} pool
+     * @param {ArrayLike} [attribs]
+     * @param {AttribPool} [pool]
      */
     insert: function (text, attribs, pool) {
       assem.appendOpWithText('+', text, attribs, pool);
@@ -2126,7 +2126,7 @@ exports.builder = function (oldLen) {
     },
     /**
      * @param {number} N number of chars to delete
-     * @param {number} L number of lines to delete
+     * @param {number} [L=0] number of lines to delete
      */
     remove: function (N, L) {
       o.opcode = '-';
@@ -2181,7 +2181,7 @@ exports.makeAttribsString = function (opcode, attribs, pool) {
 /**
  * @param {string} astr
  * @param {number} start
- * @param {number} optEnd
+ * @param {number} [optEnd]
  */
 exports.subattribution = function (astr, start, optEnd) {
   var iter = exports.opIterator(astr, 0);
