@@ -4,6 +4,7 @@ var db = require('../../db/DB');
 var stats = require('ep_etherpad-lite/node/stats')
 
 
+/** @ts-ignore **/
 exports.onShutdown = false;
 exports.gracefulShutdown = function(err) {
   if(err && err.stack) {
@@ -17,6 +18,7 @@ exports.gracefulShutdown = function(err) {
     return;
   }
 
+  /** @ts-ignore **/
   exports.onShutdown = true;
 
   console.log("graceful shutdown...");

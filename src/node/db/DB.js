@@ -43,6 +43,7 @@ let db = new ueberDB.database(settings.dbType, settings.dbSettings, null, log4js
 /**
  * The UeberDB Object that provides the database functions
  */
+/** @ts-ignore **/
 exports.db = null;
 
 /**
@@ -78,6 +79,7 @@ exports.init = function() {
       };
 
       // exposed for those callers that need the underlying raw API
+      /** @ts-ignore **/
       exports.db = db;
       resolve();
     });

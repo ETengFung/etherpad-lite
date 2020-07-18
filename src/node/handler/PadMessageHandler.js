@@ -55,6 +55,7 @@ const rateLimiter = new RateLimiterMemory({
  *   author = the author name of this session
  */
 var sessioninfos = {};
+/** @ts-ignore **/
 exports.sessioninfos = sessioninfos;
 
 // Measure total amount of users
@@ -1537,4 +1538,5 @@ exports.padUsers = async function(padID) {
   return { padUsers };
 }
 
+/** @ts-ignore **/
 exports.sessioninfos = sessioninfos;

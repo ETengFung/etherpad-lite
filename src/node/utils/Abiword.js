@@ -64,6 +64,7 @@ if(os.type().indexOf("Windows") > -1)
     });
   };
 
+  /** @ts-ignore **/
   exports.convertFile = function(srcFile, destFile, type, callback)
   {
     doConvertTask({"srcFile": srcFile, "destFile": destFile, "type": type}, callback);
@@ -141,6 +142,7 @@ else
 
   //Queue with the converts we have to do
   var queue = async.queue(doConvertTask, 1);
+  /** @ts-ignore **/
   exports.convertFile = function(srcFile, destFile, type, callback)
   {
     queue.push({"srcFile": srcFile, "destFile": destFile, "type": type, "callback": callback});

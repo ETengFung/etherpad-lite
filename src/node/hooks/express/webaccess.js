@@ -99,6 +99,7 @@ exports.basicAuth = function (req, res, next) {
   });
 }
 
+/** @ts-ignore **/
 exports.secret = null;
 
 exports.expressConfigure = function (hook_name, args, cb) {
@@ -125,6 +126,7 @@ exports.expressConfigure = function (hook_name, args, cb) {
 
   if (!exports.sessionStore) {
     exports.sessionStore = new ueberStore();
+    /** @ts-ignore **/
     exports.secret = settings.sessionKey;
   }
 

@@ -74,6 +74,7 @@ exports.faviconTimeslider = "../../" + exports.favicon;
  * Initialized to null, so we can spot an old configuration file and invite the
  * user to update it before falling back to the default.
  */
+/** @ts-ignore **/
 exports.skinName = null;
 
 exports.skinVariants = "super-light-toolbar super-light-editor light-background";
@@ -116,6 +117,7 @@ exports.dbSettings = { "filename" : path.join(exports.root, "var/dirty.db") };
 /**
  * The default Text of a new pad
  */
+/** @ts-ignore **/
 exports.defaultPadText = "Welcome to Etherpad!\n\nThis pad text is synchronized as you type, so that everyone viewing this page sees the same text. This allows you to collaborate seamlessly on documents!\n\nEtherpad on Github: https:\/\/github.com\/ether\/etherpad-lite\n";
 
 /**
@@ -211,11 +213,13 @@ exports.minify = true;
 /**
  * The path of the abiword executable
  */
+/** @ts-ignore **/
 exports.abiword = null;
 
 /**
  * The path of the libreoffice executable
  */
+/** @ts-ignore **/
 exports.soffice = null;
 
 /**
@@ -261,6 +265,7 @@ exports.logconfig = { appenders: [{ type: "console" }]};
 /*
  * Session Key, do not sure this.
  */
+/** @ts-ignore **/
 exports.sessionKey = false;
 
 /*
@@ -275,6 +280,7 @@ exports.trustProxy = false;
  */
 exports.requireAuthentication = false;
 exports.requireAuthorization = false;
+/** @ts-ignore **/
 exports.users = {};
 
 /*
@@ -686,6 +692,7 @@ exports.reloadSettings = function reloadSettings() {
 
   if (!exports.skinName) {
     console.warn(`No "skinName" parameter found. Please check out settings.json.template and update your settings.json. Falling back to the default "colibris".`);
+    /** @ts-ignore **/
     exports.skinName = "colibris";
   }
 
@@ -697,6 +704,7 @@ exports.reloadSettings = function reloadSettings() {
     if (countPieces != 1) {
       console.error(`skinName must be the name of a directory under "${skinBasePath}". This is not valid: "${exports.skinName}". Falling back to the default "colibris".`);
 
+      /** @ts-ignore **/
       exports.skinName = "colibris";
     }
 
@@ -707,12 +715,14 @@ exports.reloadSettings = function reloadSettings() {
     if (absolutePaths.isSubdir(skinBasePath, skinPath) === false) {
       console.error(`Skin path ${skinPath} must be a subdirectory of ${skinBasePath}. Falling back to the default "colibris".`);
 
+      /** @ts-ignore **/
       exports.skinName = "colibris";
       skinPath = path.join(skinBasePath, exports.skinName);
     }
 
     if (fs.existsSync(skinPath) === false) {
       console.error(`Skin path ${skinPath} does not exist. Falling back to the default "colibris".`);
+      /** @ts-ignore **/
       exports.skinName = "colibris";
       skinPath = path.join(skinBasePath, exports.skinName);
     }
@@ -769,6 +779,7 @@ exports.reloadSettings = function reloadSettings() {
       return true;
     });
 
+    /** @ts-ignore **/
     exports.users = filteredUsers;
   }
 
@@ -779,9 +790,11 @@ exports.reloadSettings = function reloadSettings() {
         if (!exists) {
           var abiwordError = "Abiword does not exist at this path, check your settings file.";
           if (!exports.suppressErrorsInPadText) {
+            /** @ts-ignore **/
             exports.defaultPadText = exports.defaultPadText + "\nError: " + abiwordError + suppressDisableMsg;
           }
           console.error(abiwordError + ` File location: ${exports.abiword}`);
+          /** @ts-ignore **/
           exports.abiword = null;
         }
       });
@@ -794,9 +807,11 @@ exports.reloadSettings = function reloadSettings() {
         var sofficeError = "soffice (libreoffice) does not exist at this path, check your settings file.";
 
         if (!exports.suppressErrorsInPadText) {
+          /** @ts-ignore **/
           exports.defaultPadText = exports.defaultPadText + "\nError: " + sofficeError + suppressDisableMsg;
         }
         console.error(sofficeError + ` File location: ${exports.soffice}`);
+        /** @ts-ignore **/
         exports.soffice = null;
       }
     });
@@ -805,10 +820,12 @@ exports.reloadSettings = function reloadSettings() {
   if (!exports.sessionKey) {
     var sessionkeyFilename = absolutePaths.makeAbsolute(argv.sessionkey || "./SESSIONKEY.txt");
     try {
+      /** @ts-ignore **/
       exports.sessionKey = fs.readFileSync(sessionkeyFilename,"utf8");
       console.info(`Session key loaded from: ${sessionkeyFilename}`);
     } catch(e) {
       console.info(`Session key file "${sessionkeyFilename}" not found. Creating with random contents.`);
+      /** @ts-ignore **/
       exports.sessionKey = randomString(32);
       fs.writeFileSync(sessionkeyFilename,exports.sessionKey,"utf8");
     }
@@ -819,6 +836,7 @@ exports.reloadSettings = function reloadSettings() {
   if (exports.dbType === "dirty") {
     var dirtyWarning = "DirtyDB is used. This is fine for testing but not recommended for production.";
     if (!exports.suppressErrorsInPadText) {
+      /** @ts-ignore **/
       exports.defaultPadText = exports.defaultPadText + "\nWarning: " + dirtyWarning + suppressDisableMsg;
     }
 
