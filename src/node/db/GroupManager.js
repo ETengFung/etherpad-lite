@@ -20,7 +20,8 @@
 
 var customError = require("../utils/customError");
 var randomString = require('ep_etherpad-lite/static/js/pad_utils').randomString;
-/** @type {Database} */
+/** @typedef { import("./DB").db } Database */
+/** @type Database */
 var db = require("./DB");
 var padManager = require("./PadManager");
 var sessionManager = require("./SessionManager");

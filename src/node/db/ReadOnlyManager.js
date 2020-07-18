@@ -18,7 +18,8 @@
  * limitations under the License.
  */
 
-/** @type {Database} */
+/** @typedef { import("./DB").db } Database */
+/** @type Database */
 var db = require("./DB");
 var randomString = require("../utils/randomstring");
 

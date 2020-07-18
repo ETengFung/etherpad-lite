@@ -20,7 +20,8 @@
 
 var customError = require("../utils/customError");
 var Pad = require("../db/Pad").Pad;
-/** @type {Database} */
+/** @typedef { import("./DB").db } Database */
+/** @type Database */
 var db = require("./DB");
 
 /**

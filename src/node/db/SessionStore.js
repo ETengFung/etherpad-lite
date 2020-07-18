@@ -8,6 +8,8 @@
  */
 
 var Store = require('ep_etherpad-lite/node_modules/express-session').Store,
+/** @typedef { import("./DB").db } Database */
+/** @type {Database} */
   db = require('ep_etherpad-lite/node/db/DB').db,
   log4js = require('ep_etherpad-lite/node_modules/log4js'),
   messageLogger = log4js.getLogger("SessionStore");

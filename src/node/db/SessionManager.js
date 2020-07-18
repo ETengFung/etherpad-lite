@@ -20,6 +20,7 @@
 
 var customError = require("../utils/customError");
 var randomString = require("../utils/randomstring");
+/** @typedef { import("./DB").db } Database */
 /** @type {Database} */
 var db = require("./DB");
 var groupManager = require("./GroupManager");
