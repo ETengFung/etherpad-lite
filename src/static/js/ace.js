@@ -3,6 +3,10 @@
  * This helps other people to understand this code better and helps them to improve it.
  * TL;DR COMMENTS ON THIS FILE ARE HIGHLY APPRECIATED
  */
+/**
+ * @file This file dynamically builds the actual Editor inner (edit area)
+ *       and outer (sidediv with line numbers) iframes
+ */
 
 /**
  * Copyright 2009 Google Inc.
